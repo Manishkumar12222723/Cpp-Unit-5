@@ -1,0 +1,1095 @@
+/****************************
+Manish Kumar
+****************************/
+
+
+
+Problem Statement
+
+
+
+In a chemical laboratory, researchers are studying the kinetics of a specific chemical reaction. They are interested in predicting the reaction rate at different time points to understand the reaction's behavior over time. The reaction involves multiple reactants, and the rate is determined by a specific reaction rate constant and reaction order. As a computer scientist, your task is to develop a program that takes inputs regarding the reactants, reaction rate constant, and reaction order, and calculates the reaction rate at a given time point using concrete class.
+
+
+
+Example:
+
+Input:
+
+2    // Number of reactants (numReactants)
+
+2 3   // Reactant concentrations
+
+0.1   // Reaction rate constant
+
+2    // Reaction order
+
+5    // Time at which to calculate the reaction rate
+
+
+
+Output:
+
+The reaction rate at time 5 is: 3.6
+
+Explanation:
+
+In the given input, we have two reactants with concentrations 2 and 3. The reaction rate constant is 0.1, and the reaction order is 2. Using the formula for the reaction rate, we can calculate it as follows:
+
+
+
+Reaction Rate = Reaction Rate Constant * (Concentration of Reactant 1 ^ Reaction Order) * (Concentration of Reactant 2 ^ Reaction Order)
+
+Reaction Rate = 0.1 * (2 ^ 2) * (3 ^ 2) = 0.1 * 4 * 9 = 0.1 * 36 = 3.6
+
+The reaction rate at time 5 is: 3.6
+
+Input format :
+The first line contains an integer (numReactants) representing the number of reactants in the chemical reaction.
+
+The second line contains numReactants space-separated floating-point numbers (reactantConcentrations) representing the concentrations of the reactants.
+
+The third line contains a single floating-point number (reactionRateConstant) representing the reaction rate constant.
+
+The fourth line contains a single integer (reactionOrder) representing the reaction order.
+
+The fifth line contains an integer (time) representing the time at which to calculate the reaction rate.
+
+Output format :
+The output displays a single line displaying the calculated reaction rate at the given time point.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+The number of reactants (numReactants) will be an integer between 1 and 5, inclusive.
+
+The concentration of each reactant will be a floating-point number between 0.1 and 10.0, inclusive.
+
+The reaction rate constant will be a floating-point number between 0.001 and 0.1, inclusive.
+
+The reaction order will be an integer between 1 and 3, inclusive.
+
+The time at which to calculate the reaction rate will be a floating-point number between 1.0 and 15.0, inclusive.
+
+Sample test cases :
+Input 1 :
+2
+2 3
+0.1
+2
+5
+Output 1 :
+The reaction rate at time 5 is: 3.6
+Input 2 :
+3
+1 2 3
+0.05
+1
+10
+Output 2 :
+The reaction rate at time 10 is: 0.3
+
+
+// You are using GCC
+#include <iostream>
+#include <cmath>
+const int MAX_REACTANTS = 5;
+
+class ChemicalReaction {
+private:
+    double reactantConcentrations[MAX_REACTANTS];
+    double reactionRateConstant;
+    int reactionOrder;
+    int numReactants;
+
+public:
+    ChemicalReaction(int numReactants) : numReactants(numReactants) {
+        for (int i = 0; i < numReactants; i++) {
+            reactantConcentrations[i] = 0.0;
+        }
+        reactionRateConstant = 0.0;
+        reactionOrder = 1;
+    }
+    void setReactantConcentrations() {
+        for (int i = 0; i < numReactants; i++) {
+            std::cin >> reactantConcentrations[i];
+        }
+    }
+    void setReactionRateConstant() {
+        std::cin >> reactionRateConstant;
+    }
+    void setReactionOrder() {
+        std::cin >> reactionOrder;
+    }
+    double calculateReactionRate(double time) {
+        double reactionRate = reactionRateConstant;
+        for (int i = 0; i < numReactants; i++) {
+            reactionRate *= pow(reactantConcentrations[i], reactionOrder);
+        }
+        return reactionRate;
+    }
+};
+
+int main() {
+    int numReactants;
+    std::cin >> numReactants;
+
+    ChemicalReaction reaction(numReactants);
+
+    reaction.setReactantConcentrations();
+    reaction.setReactionRateConstant();
+    reaction.setReactionOrder();
+
+    double time;
+    std::cin >> time;
+
+    double rate = reaction.calculateReactionRate(time);
+    std::cout << "The reaction rate at time " << time << " is: " << rate << std::endl;
+
+    return 0;
+}
+
+
+
+Problem Statement
+
+
+
+The HR Department at XYZ Corporation needs a program to manage and display the details of their employees. They require a concrete class named "Employee" to handle individual employee information. The "Employee" class should have private attributes to store the employee's name, ID, and monthly salary. It should provide methods to calculate the employee's annual salary and give them a raise based on a given percentage.
+
+
+
+Once the user provides the employee details, the program should create an object of the "Employee" class with the given information and display the initial details, including the monthly and annual salary.
+
+
+
+Next, the program should prompt the user to enter a raise percentage for the employee. The program should then apply the raise to the employee's monthly salary, update their details accordingly, and display the updated employee information, including the new monthly and annual salary.
+
+
+
+The program should utilize the concrete class "Employee" to manage and display the details of each employee, incorporating the provided member functions to perform calculations and updates for individual employees.
+
+Input format :
+The first line contains the employee name.
+
+The second line contains the employee ID.
+
+The third line contains the employee's monthly salary.
+
+The fourth line contains the percentage increase in the salary.
+
+Output format :
+The output should be displayed in this format for each employee's details and updated details after the raise.
+
+The first line displays the employee's name.
+
+The second line displays the employee ID.
+
+The third line displays the monthly salary.
+
+The fourth line displays the annual salary.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+The employee name will be a string containing alphabets, spaces, and special characters.
+
+The employee ID will be a string containing alphanumeric characters.
+
+The monthly salary will be a positive floating number.
+
+The increase percentage will be a positive floating-point number.
+
+Sample test cases :
+Input 1 :
+John Doe
+E1234
+5000.00
+10.00
+Output 1 :
+Employee Name: John Doe
+Employee ID: E1234
+Monthly Salary: $5000.00
+Annual Salary: $60000.00
+Employee Name: John Doe
+Employee ID: E1234
+Monthly Salary: $5500.00
+Annual Salary: $66000.00
+Input 2 :
+Alice Smith
+A9876
+4000.00
+5.00
+Output 2 :
+Employee Name: Alice Smith
+Employee ID: A9876
+Monthly Salary: $4000.00
+Annual Salary: $48000.00
+Employee Name: Alice Smith
+Employee ID: A9876
+Monthly Salary: $4200.00
+Annual Salary: $50400.00
+
+
+
+// You are using GCC
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+
+class Employee {
+private:
+    string employeeName;
+    string employeeID;
+    double monthlySalary;
+
+public:
+    Employee() {}
+
+    Employee(const string& name, const string& id, double salary)
+        : employeeName(name), employeeID(id), monthlySalary(salary) {}
+
+    double calculateAnnualSalary() const {
+        return monthlySalary * 12;
+    }
+
+    void giveRaise(double percentage) {
+        monthlySalary += monthlySalary * (percentage / 100);
+    }
+
+    void displayEmployeeDetails() const {
+        cout << "Employee Name: " << employeeName << endl;
+        cout << "Employee ID: " << employeeID << endl;
+        cout << "Monthly Salary: $" << fixed << setprecision(2) << monthlySalary << endl;
+        cout << "Annual Salary: $" << fixed << setprecision(2) << calculateAnnualSalary() << endl;
+    }
+};
+
+int main() {
+    string name, id;
+    double monthlySalary;
+    getline(cin, name);
+    getline(cin, id);
+    cin >> monthlySalary;
+    Employee emp(name, id, monthlySalary);
+    emp.displayEmployeeDetails();
+    double raisePercentage;
+    cin >> raisePercentage;
+    emp.giveRaise(raisePercentage);
+    emp.displayEmployeeDetails();
+    return 0;
+}
+
+
+
+
+Problem Statement
+
+
+
+You are tasked with creating a program that helps build a course prerequisites hierarchy for a university. The program should utilize a self-referential class to represent the courses and their prerequisites.
+
+
+
+Write a program that interacts with the user to build the course hierarchy. Prompt the user to enter the name of a course and whether it has a prerequisite. If a prerequisite exists, ask for its name and continue adding prerequisites until the user indicates there are no more prerequisites for a particular course.
+
+
+
+Finally, display the entire course hierarchy, showing each course and its prerequisites in an organized manner.
+
+
+
+Ensure the program handles memory management appropriately for dynamically allocated prerequisite courses.
+
+Input format :
+The first line on input consists of the name of a course as a string.
+
+The next line contains whether the course has a prerequisite or not (y/n).
+
+If a prerequisite exists (indicated by 'y'), then the name of the prerequisite course is a string.
+
+Output format :
+The program will display the entire course hierarchy, showing each course and its prerequisites in an organized manner.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+The course names will be strings containing alphabets, spaces, and special characters.
+
+Memory management should be appropriately handled for dynamically allocated prerequisite courses.
+
+Sample test cases :
+Input 1 :
+Mathematics
+n
+Output 1 :
+Course Prerequisites:
+- Mathematics
+Input 2 :
+Chemistry
+y
+Mathematics
+y
+Physics
+n
+Output 2 :
+Course Prerequisites:
+- Chemistry
+  Prerequisite: - Mathematics
+    Prerequisite: - Physics
+
+
+
+// You are using GCC
+#include <iostream>
+#include <string>
+using namespace std;
+class Course {
+public:
+    string name;
+    Course* nextPrerequisite;
+    Course() : nextPrerequisite(nullptr) {}
+    Course(const string& n) : name(n), nextPrerequisite(nullptr) {}
+    void addPrerequisite(Course* pre) {
+        if (nextPrerequisite == nullptr) {
+            nextPrerequisite = pre;
+        } else {
+            nextPrerequisite->addPrerequisite(pre);
+        }
+    }
+    void printCourseWithPrerequisites(int level = 0) const {
+        for (int i = 0; i < level; ++i) {
+        }
+        cout << "- " << name << endl;
+
+        if (nextPrerequisite != nullptr) {
+            for (int i = 0; i <= level; ++i) {
+                cout << "  ";
+            }
+            cout << "Prerequisite: ";
+            nextPrerequisite->printCourseWithPrerequisites(level + 1);
+        }
+    }
+};
+
+int main() {
+    Course rootCourse;
+    getline(cin, rootCourse.name);
+    char addPrerequisite;
+    do {
+        cin >> addPrerequisite;
+
+        if (addPrerequisite == 'y' || addPrerequisite == 'Y') {
+            string prerequisiteName;
+            cin.ignore();
+            getline(cin, prerequisiteName);
+            Course* prerequisiteCourse = new Course(prerequisiteName);
+            rootCourse.addPrerequisite(prerequisiteCourse);
+        }
+    } while (addPrerequisite == 'y' || addPrerequisite == 'Y');
+    cout << "Course Prerequisites:" <<endl;
+    rootCourse.printCourseWithPrerequisites();
+    return 0;
+}
+
+
+Problem Statement
+
+
+
+You are tasked with creating a program that helps build a network of students and their friendships at a university. The program should utilize a self-referential class to represent the students and their friendships.
+
+
+
+Write a program that interacts with the user to build the student network. Prompt the user to enter the number of students in the network and their names. For each student, ask for the number of friends they have and the index (1-based) of their friends in the list of students. Then, create a network of friendships accordingly.
+
+
+
+Finally, calculate and display the average number of friends among all students in the network.
+
+Input format :
+The input starts with an integer N (1 ≤ N ≤ 100) denoting the number of students in the network. The next N lines contain the names of the students.
+
+
+
+After that, for each student, there is an integer K (0 ≤ K ≤ N) denoting the number of friends they have. If K > 0, then the next K lines contain the indices (1-based) of their friends in the list of students.
+
+Output format :
+The output displays the average number of friends among all students in the network, rounded to two decimal places.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+The maximum number of students is 100.
+
+Each student can have a maximum of 100 friends.
+
+The names of the students are non-empty strings containing only alphanumeric characters.
+
+Sample test cases :
+Input 1 :
+3
+Alice
+Bob
+Charlie
+2
+2
+3
+1
+3
+0
+Output 1 :
+Average number of friends among all students: 1.00
+Input 2 :
+4
+John
+Mary
+David
+Laura
+2
+2
+3
+1
+Output 2 :
+Average number of friends among all students: 1.25
+
+// You are using GCC
+#include <iostream>
+#include <string>
+#include <iomanip>
+using namespace std;
+class Student {
+private:
+    string name;
+    Student* friends[100];
+    int numFriends;
+public:
+    Student(const string& studentName) : name(studentName), numFriends(0) {}
+    string getName() const {
+        return name;
+    }
+    void addFriend(Student* friendPtr) {
+        if (numFriends < 100) {
+            friends[numFriends] = friendPtr;
+            numFriends++;
+        } else {
+            cout << "Cannot add more friends. Maximum limit reached." <<endl;
+        }
+    }
+    void removeFriend(Student* friendPtr) {
+        for (int i = 0; i < numFriends; i++) {
+            if (friends[i] == friendPtr) {
+                for (int j = i; j < numFriends - 1; j++) {
+                    friends[j] = friends[j + 1];
+                }
+                numFriends--;
+                break;
+            }
+        }
+    }
+    int getNumFriends() const {
+        return numFriends;
+    }
+    static double getAverageFriends(Student* students[], int numStudents) {
+        int totalFriends = 0;
+        for (int i = 0; i < numStudents; i++) {
+            totalFriends += students[i]->getNumFriends();
+        }
+        return static_cast<double>(totalFriends) / numStudents;
+    }
+};
+
+int main() {
+    int numStudents;
+    cin >> numStudents;
+    cin.ignore();
+    Student* students[numStudents];
+    string studentName;
+    for (int i = 0; i < numStudents; i++) {
+        getline(cin, studentName);
+        students[i] = new Student(studentName);
+    }
+    int numFriends;
+    int friendIndex;
+    for (int i = 0; i < numStudents; i++) {
+        cin >> numFriends;
+        cin.ignore();
+
+        for (int j = 0; j < numFriends; j++) {
+            cin >> friendIndex;
+            cin.ignore();
+            if (friendIndex > 0 && friendIndex <= numStudents) {
+                students[i]->addFriend(students[friendIndex - 1]);
+            } else {
+                cout << "Invalid friend index" <<endl;
+                j--;
+            }
+        }
+    }
+    double averageFriends = Student::getAverageFriends(students, numStudents);
+    cout << fixed << setprecision(2);
+    cout << "Average number of friends among all students: " << averageFriends;
+    for (int i = 0; i < numStudents; i++) {
+        delete students[i];
+    }
+    return 0;
+}
+
+
+Problem Statement
+
+
+
+Design an Energy Consumption tracking program that utilizes the concept of concrete classes to implement the missing functionalities of an abstract class. The program aims to monitor and calculate the energy consumption of various household devices. 
+
+
+
+It allows users to input device details such as power ratings (in watts) and usage hours per day. Based on this information, the program calculates and displays the energy consumption of each device, as well as the total energy consumption.
+
+
+
+Note:
+
+In the given example, the input includes two devices: a Refrigerator and an Air Conditioner.
+The Refrigerator class and AirConditioner class are concrete classes that inherit from the abstract class Device, implementing the missing functionality to calculate energy consumption.
+The program calculates the energy consumption of each device based on the provided power ratings and usage hours per day.
+The total energy consumption is calculated by summing up the individual energy consumption values.
+The output displays the device type and energy consumption for each device, as well as the total energy consumption.
+
+
+Note: This kind of question will help in clearing Infosys recruitment.
+
+Input format :
+The first line of the input represents the number of devices (n).
+
+For each device:
+
+The first line represents the device type (1 for Refrigerator, 2 for Air Conditioner).
+
+The next line represents the power rating of the device (in watts).
+
+The last line represents the number of hours the device is used per day
+
+Output format :
+The output displays the device type on separate lines for each device.
+
+The last line displays the sum of the energy consumption of all devices.
+
+
+
+Code constraints :
+The device type should be equal to 1 or 2.
+
+The number of devices, N, is an integer between 1 and 10.
+
+Sample test cases :
+Input 1 :
+2
+1
+150
+10
+2
+1200
+5
+Output 1 :
+Device Type: Refrigerator
+Device Type: Air Conditioner
+Total Energy Consumption: 7500 watt-hours
+Input 2 :
+3
+1
+100
+5
+2
+260
+3
+1
+320
+3
+Output 2 :
+Device Type: Refrigerator
+Device Type: Air Conditioner
+Device Type: Refrigerator
+Total Energy Consumption: 2240 watt-hours
+
+
+
+// You are using GCC
+
+#include <iostream>
+
+
+
+
+// Abstract class representing a Device
+
+class Device {
+
+public:
+
+virtual double calculateEnergyConsumption() const = 0;
+
+
+
+
+void displayDeviceDetails() const {
+
+std::cout << "Device Type: ";
+
+displaySpecificDeviceType();
+
+}
+
+
+
+
+protected:
+
+// Abstract method to display the specific device type
+
+virtual void displaySpecificDeviceType() const = 0;
+
+};
+
+
+
+
+// Concrete class representing a Refrigerator
+
+class Refrigerator : public Device {
+
+private:
+
+double powerRating; // Power rating in watts
+
+double usageHours; // Usage hours per day
+
+
+
+
+public:
+
+// Constructor
+
+Refrigerator(double powerRating, double usageHours)
+
+: powerRating(powerRating), usageHours(usageHours) {}
+
+
+
+
+// Implementation of calculateEnergyConsumption for Refrigerator
+
+double calculateEnergyConsumption() const override {
+
+// Assuming energy consumption = power rating * usage hours per day
+
+return powerRating * usageHours;
+
+}
+
+
+
+
+protected:
+
+// Implementation of displaySpecificDeviceType for Refrigerator
+
+void displaySpecificDeviceType() const override {
+
+std::cout << "Refrigerator" << std::endl;
+
+}
+
+};
+
+
+
+
+// Concrete class representing an Air Conditioner
+
+class AirConditioner : public Device {
+
+private:
+
+double powerRating; // Power rating in watts
+
+double usageHours; // Usage hours per day
+
+
+
+
+public:
+
+// Constructor
+
+AirConditioner(double powerRating, double usageHours)
+
+: powerRating(powerRating), usageHours(usageHours) {}
+
+
+
+
+// Implementation of calculateEnergyConsumption for Air Conditioner
+
+double calculateEnergyConsumption() const override {
+
+// Assuming energy consumption = power rating * usage hours per day
+
+return powerRating * usageHours;
+
+}
+
+
+
+
+protected:
+
+// Implementation of displaySpecificDeviceType for Air Conditioner
+
+void displaySpecificDeviceType() const override {
+
+std::cout << "Air Conditioner" << std::endl;
+
+}
+
+};
+
+
+
+
+int main() {
+
+int deviceCount;
+
+double totalEnergyConsumption = 0.0;
+
+
+
+
+std::cin >> deviceCount;
+
+
+
+
+// Create an array of Device pointers
+
+Device** devices = new Device*[deviceCount];
+
+
+
+
+// Get input for each device
+
+for (int i = 0; i < deviceCount; ++i) {
+
+int deviceType;
+
+double powerRating, usageHours;
+
+
+
+
+std::cin >> deviceType;
+
+std::cin >> powerRating;
+
+std::cin >> usageHours;
+
+
+
+
+// Create the corresponding device object based on the input
+
+if (deviceType == 1) {
+
+devices[i] = new Refrigerator(powerRating, usageHours);
+
+} else if (deviceType == 2) {
+
+devices[i] = new AirConditioner(powerRating, usageHours);
+
+}
+
+}
+
+
+
+
+// Calculate the total energy consumption and display device details
+
+for (int i = 0; i < deviceCount; ++i) {
+
+if (devices[i] != nullptr) {
+
+totalEnergyConsumption += devices[i]->calculateEnergyConsumption();
+
+devices[i]->displayDeviceDetails();
+
+}
+
+}
+
+
+
+
+// Display the total energy consumption
+
+std::cout << "Total Energy Consumption: " << totalEnergyConsumption << " watt-hours" << std::endl;
+
+
+
+
+// Clean up memory by deleting the dynamically allocated devices
+
+for (int i = 0; i < deviceCount; ++i) {
+
+delete devices[i];
+
+}
+
+delete[] devices;
+
+
+
+
+return 0;
+
+} 
+
+Problem Statement
+
+
+
+Nayana is required to implement a program that manages student information and their enrolled courses. The program uses self-referential classes to create a bi-directional association between students and their courses.
+
+
+
+The program should utilize a self-referential class called Course, which contains information about the course's name, grade, and a pointer to the student to whom the course belongs. The Student class, on the other hand, contains details about the student's name and an array of Course objects representing the courses they have enrolled in.
+
+
+
+Note: This kind of question will help in clearing Infosys recruitment.
+
+Input format :
+The first line of input consists of the Student's name.
+
+The next line is the number of courses.
+
+Then, for each course,
+
+  Course name (string).
+
+  Course grade (integer).
+
+
+
+Refer to the sample input for formatting specifications.
+
+Output format :
+The first line of output prints the Student's name.
+
+Then, it prints the course name and grade of each course.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+The length of the student's name and course names will not exceed 50 characters.
+
+The number of courses should be a non-negative integer and not exceed 20.
+
+The grade for each course will be an integer.
+
+Sample test cases :
+Input 1 :
+John Smith
+3
+Maths
+98
+History
+87
+English
+91
+Output 1 :
+Name: John Smith
+Courses:
+  Maths: 98
+  History: 87
+  English: 91
+
+
+
+// You are using GCC
+
+#include <iostream>
+
+#include <cstring>
+
+
+
+
+#define MAX_NAME_LENGTH 50
+
+#define MAX_COURSES 20
+
+
+
+
+class Student; // Forward declaration
+
+
+
+
+class Course {
+
+public:
+
+char name[MAX_NAME_LENGTH];
+
+int grade;
+
+Student* student; // Self-referential member
+
+
+
+
+Course() : student(nullptr) {}
+
+};
+
+
+
+
+class Student {
+
+public:
+
+char name[MAX_NAME_LENGTH];
+
+Course courses[MAX_COURSES];
+
+int num_courses;
+
+
+
+
+Student() : num_courses(0) {}
+
+
+
+
+void add_course(const char* courseName, int grade) {
+
+if (num_courses >= MAX_COURSES) {
+
+std::cout << "Maximum number of courses reached." << std::endl;
+
+return;
+
+}
+
+
+
+
+std::strcpy(courses[num_courses].name, courseName);
+
+courses[num_courses].grade = grade;
+
+courses[num_courses].student = this; // Set the self-referential pointer
+
+num_courses++;
+
+}
+
+
+
+
+void print_student() const {
+
+std::cout << "Name: " << name << std::endl;
+
+std::cout << "Courses:" << std::endl;
+
+for (int i = 0; i < num_courses; i++) {
+
+std::cout << " " << courses[i].name << ": " << courses[i].grade << std::endl;
+
+}
+
+}
+
+};
+
+
+
+
+int main() {
+
+Student student;
+
+
+
+
+std::cin.getline(student.name, MAX_NAME_LENGTH);
+
+
+
+
+int num_courses;
+
+std::cin >> num_courses;
+
+std::cin.ignore(); // Ignore the newline character from input buffer
+
+
+
+
+for (int i = 0; i < num_courses; i++) {
+
+char name[MAX_NAME_LENGTH];
+
+int grade;
+
+
+
+
+std::cin.getline(name, MAX_NAME_LENGTH);
+
+
+
+
+std::cin >> grade;
+
+std::cin.ignore(); // Ignore the newline character from input buffer
+
+
+
+
+student.add_course(name, grade);
+
+}
+
+
+
+
+student.print_student();
+
+
+
+
+return 0;
+
+} 
+
+

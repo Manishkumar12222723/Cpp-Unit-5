@@ -1,0 +1,1935 @@
+/****************************
+Manish Kumar
+****************************/
+
+
+
+Problem statement
+
+
+
+Karthick is developing a search engine system that allows users to find a substring in a given text document. Users will input the main text and the substring they want to search for.
+
+
+
+His task is to implement a program that uses operator overloading (/) to find if the provided substring is present in the given text. Write a program to accomplish this task.
+
+Input format :
+The first line of the input represents a string.
+
+The second line represents a substring.
+
+Output format :
+The output displays whether the substring is present in the given string or not.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+The length of each string should not exceed 30 characters.
+
+Sample test cases :
+Input 1 :
+Programming
+gram
+Output 1 :
+Substring is present
+Input 2 :
+Television
+live
+Output 2 :
+substring is not present
+
+
+// You are using GCC
+#include<iostream>
+#include<cstring>
+using namespace std;
+class FindSubstring{
+   private:
+           char str[30];
+   public:
+          void input();
+          void show();
+          int operator/ (FindSubstring formal_parameter);
+         
+};
+
+void FindSubstring::input()
+{
+  cin>>str;
+}
+void FindSubstring::show()
+{
+   cout<<"\n"<<str;
+}
+int FindSubstring::operator/ (FindSubstring formal_parameter)
+{
+   int flag=0,k,i,j,len=strlen(str),len1=strlen(formal_parameter.str)-1;
+   for(i=0;i<len;i++)
+    {
+      if(str[i]==formal_parameter.str[0])
+       {
+        if(str[i+len1]==formal_parameter.str[len1])
+          {
+           for(j=i,k=0;j<i+len1+1,k<len1;j++,k++)
+             {
+              if(str[j]==formal_parameter.str[k])
+                flag=1;
+              else
+                { 
+                  flag=0;
+                  break;
+                } 
+              }
+           }
+        }
+    }
+   if(flag==0)
+     return 0; 
+	 
+     return 1; 
+}
+
+int main()
+{
+  
+    FindSubstring a,b;
+    int c;
+    a.input();
+    b.input();
+    c=a/b;
+    if(c==1)
+        cout<<"Substring is present";
+    else
+    cout<<"substring is not present";
+    return 0;
+}
+
+
+
+
+blem statement
+
+
+
+Ria is developing a simple educational game for children to test their knowledge of uppercase and lowercase letters. The game will present four letters, and the children will input their answers for each letter. Her task is to implement a program that calculates the score based on the following rules:
+
+
+
+For every correct uppercase letter input, the player earns 10 points.
+For every correct lowercase letter input, the player loses 5 points.
+The game presents four letters, and the player will provide their answers one by one.
+After receiving all four answers, the program will display the final score.
+
+
+Create a base class called QuizGame with the virtual method void game(). Define this method in the derived class called StudentScore to calculate the total score based on the number of correct and incorrect answers.
+
+Input format :
+The input consists of four characters separated by a space.
+
+Output format :
+The output prints the total score.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+The input should be a valid letter from the English alphabet (A to Z or a to z).
+
+Sample test cases :
+Input 1 :
+A F K R
+Output 1 :
+Score : 40
+Input 2 :
+A b D f
+Output 2 :
+Score : 10
+Whitelist
+
+
+// You are using GCC
+#include <iostream>
+
+using namespace std;
+class QuizGame{
+    public:
+   
+    virtual void game()=0;
+};
+class StudentScore: public QuizGame{
+    public:
+    char a,b,c,d;
+    int s=0;
+    void game() override{
+        if(a>='A'&&a<='Z'){
+           s=s+10; 
+        }
+        else{
+            s=s-5;
+        }
+        if(b>='A'&&b<='Z'){
+           s=s+10; 
+        }
+        else{
+            s=s-5;
+        }
+        if(c>='A'&&c<='Z'){
+           s=s+10; 
+        }
+        else{
+            s=s-5;
+        }
+        if(d>='A'&&d<='Z'){
+           s=s+10; 
+        }
+        else{
+            s=s-5;
+        }
+        cout<<"Score : "<<s;
+    }
+};
+
+int main()
+{
+  StudentScore dd;
+   cin>>dd.a>>dd.b>>dd.c>>dd.d;
+   dd.game();
+   
+   return 0;
+}
+
+Single File Programming Question
+Problem Statement
+
+
+
+Renu works for a retail store that sells two types of items: wooden items and electronics. The store needs a program to calculate the total amount for a customer's purchase based on their choice of item type and the quantity or cost of the item(s).
+
+
+
+Create a base class, ItemType, with one virtual function.
+
+double calculateAmount()
+
+
+
+Create a class called wooden that extends ItemType with a number of items and cost as its private attributes. Obtain the data members and override the virtual function.
+
+amount = number of items * cost
+
+
+
+Create a class for electronics that extends ItemType with cost as its private attribute. Obtain the data member and override the virtual function.
+
+amount = 80% of the amount (20% discount)
+
+
+
+In the main method, obtain a choice.
+
+If the choice is 1, create an object for the wooden class and call the method.
+
+If the choice is 2, create an object for the electronics class and call the method.
+
+Input format :
+The first line of the input consists of the choice.
+
+If the choice is 1, enter the number of items and their cost.
+
+If the choice is 2, enter the cost.
+
+Output format :
+The output prints the final amount. Round off the output to two decimal places.
+
+Sample test cases :
+Input 1 :
+1
+5 840
+Output 1 :
+4200.00
+Input 2 :
+2
+1800
+Output 2 :
+1440.00
+
+
+// You are using GCC
+#include<bits/stdc++.h>
+using namespace std;
+
+class ItemType
+{
+public:
+	virtual double calculateAmount() = 0;
+};
+
+class wooden: public ItemType
+{
+    int noOfItems;
+    double cost;
+    public:
+        int get()
+        {
+            cin>>noOfItems>>cost;
+        }
+        double calculateAmount()
+        {
+            return noOfItems*cost;
+        }
+	    
+};
+
+class electronics: public ItemType
+{
+    double cost;
+    public:
+        int get()
+        {
+            cin>>cost;
+        }
+        double calculateAmount()
+        {
+            double discount = cost * 0.20;
+            return (cost-discount);
+        }
+	    
+};
+
+int main()
+{
+    int choice;
+    cin>>choice;
+    if(choice ==1)
+    {
+        wooden w;
+        w.get();
+        cout<<fixed<<setprecision(2)<<w.calculateAmount();
+    }
+    if(choice ==2)
+    {
+        electronics e;
+        e.get();
+        cout<<fixed<<setprecision(2)<<e.calculateAmount();
+    }
+    
+}
+
+
+
+
+Problem statement
+
+
+
+David is tasked with creating a versatile calculator program that can perform various mathematical operations based on user inputs. The calculator should be able to handle three types of operations: square of a number, modulus between two integers, and quotient between two floating-point numbers. Write a program to accomplish this task.
+
+
+
+Function Prototype
+
+int calc(int a)
+
+int calc(int a, int b)
+
+float calc(float a, float b)
+
+Input format :
+The input has 2 integer values and 2 floating-point values separated by a space.
+
+
+
+Note: The first input for Square function, the first two inputs for the modulus function and the last two inputs for the division function.
+
+Output format :
+The first line of the output displays the square of the given number.
+
+The second line displays the modulus of the first two numbers.
+
+The third line displays the Quotient of the last two numbers.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Sample test cases :
+Input 1 :
+2 5 6.3 5.2
+Output 1 :
+Square of 2: 4
+Modulus of 2, 5: 2
+Quotient of 6.3, 5.2: 1.21
+Input 2 :
+-8 -6 -5 2.0365
+Output 2 :
+Square of -8: 64
+Modulus of -8, -6: -2
+Quotient of -5, 2.0365: -2.46
+
+
+
+// You are using GCC
+#include<bits/stdc++.h>
+using namespace std;
+int calc(int a)
+{
+    return (a*a);
+}
+int calc(int a, int b)
+{
+    return (a%b);
+}
+float calc(float a, float b)
+{
+    return (a/b);
+}
+int main()
+{
+    int x,y,ch;
+    float n1,n2;
+    cin>>x>>y>>n1>>n2;
+    cout<<"Square of "<<x<<": "<<calc(x)<<endl;
+    cout<<"Modulus of "<<x<<", "<<y<<": "<<calc(x,y)<<endl;
+    cout<<"Quotient of "<<n1<<", "<<n2<<": "<<fixed<<setprecision(2) <<calc(n1,n2);
+    return 0;
+}
+
+
+
+Problem Statement﻿
+
+
+
+Ram, a student studying mathematics, is developing a simple calculator program. He sometimes needs to add two numbers, and at other times, he needs to multiply three numbers, depending on the task he is working on.
+
+
+
+His task is to Create a class with two overloaded functions to handle addition and multiplication operations based on the number of input arguments. Write a program using function overloading to accomplish this task.
+
+
+
+Function Prototype
+
+fun1(int num1, int num2, int num3)
+
+fun1(int num1, int num2)
+
+Input format :
+The input consists of the number of elements N followed by the N elements separated by space.
+
+Output format :
+The output displays the sum if there are two integers or the product if there are three integers.
+
+If the number of elements is other than 2 or 3, then display the message as invalid input.
+
+
+
+Refer to the sample output for format specifications.
+
+Code constraints :
+2 <= N <= 3
+
+Sample test cases :
+Input 1 :
+3 1 2 3
+Output 1 :
+6
+Input 2 :
+2 14 56
+Output 2 :
+70
+Input 3 :
+4 67 89 43 21
+Output 3 :
+Invalid Input
+
+
+
+// You are using GCC
+#include <bits/stdc++.h>
+using namespace std;
+class Fun {
+public:
+    int fun1(int num1,int num2) {
+        return num1+num2;
+    }
+    int fun1(int num1,int num2, int num3) {
+       return num1*num2*num3;
+    }
+};
+int main() {
+    Fun obj;
+    int i,n;
+    cin>>n;
+    int arr[n];
+    for(i=0;i<n;i++)
+        cin>>arr[i];
+    if(n==2)
+        cout<<obj.fun1(arr[0],arr[1]);
+    else if(n==3)
+        cout<<obj.fun1(arr[0],arr[1],arr[2]);
+    else
+        cout<<"Invalid Input";
+    return 0;
+}
+
+
+
+Problem statement
+
+
+
+Saju is tasked with developing a program to represent points and lines in a Cartesian coordinate system. The program should allow the user to input the coordinates of two points and then display the line connecting those two points.
+
+
+
+Create a class named Point that represents a point with two private data members, x and y, representing the x-coordinate and y-coordinate, respectively. It has a constructor to initialize the point and setX() and setY() functions to update the coordinates. The class also has a pure virtual function, display(), to be overridden by the derived class.
+
+
+
+Create a class named Line is derived from the Point class and represents a line segment connecting two points. It has two additional private data members, x2 and y2, representing the x-coordinate and y-coordinate of the end point of the line segment, respectively. The class has a constructor to initialize the line segment and setX2() and setY2() functions to update the coordinates of the end point. The display() function is overridden to display the start and end points of the line.
+
+
+
+In the main function, the program should prompt the user to enter the coordinates of two points (x1, y1) and (x2, y2) to represent the line segment. The program should then create a Line object with the given coordinates and display the line segment by calling the display() function.
+
+Input format :
+The first two integer inputs denote the x and y coordinates of the start point.
+
+The next two integer inputs denote the x and y coordinates of the end point.
+
+Output format :
+The output prints the start point and end point of the line as per the sample output format.
+
+
+
+Refer to the sample output for format specifications.
+
+Code constraints :
+The coordinates x1, y1, x2, and y2 are integers.
+
+1 <= x1, y1, x2, y2 <= 6000 (The coordinates are within this range.)
+
+Sample test cases :
+Input 1 :
+1 2
+3 4
+Output 1 :
+The line is:
+Start point: (1,2)
+End point: (3,4)
+
+
+
+
+
+// You are using GCC
+#include <iostream>
+using namespace std;
+
+class Point {
+private:
+    int x, y;
+
+public:
+    Point(int a = 0, int b = 0) : x(a), y(b) {}
+
+    void setX(int a) {
+        x = a;
+    }
+
+    void setY(int b) {
+        y = b;
+    }
+
+    virtual void display() = 0;
+
+    void displayPoint() {
+        cout << "(" << x << "," << y << ")";
+    }
+};
+
+class Line : public Point {
+private:
+    int x2, y2;
+
+public:
+    Line(int a = 0, int b = 0, int c = 0, int d = 0) : Point(a, b), x2(c), y2(d) {}
+
+    void setX2(int c) {
+        x2 = c;
+    }
+
+    void setY2(int d) {
+        y2 = d;
+    }
+
+    void display() override {
+        cout << "Start point: ";
+        displayPoint();
+        cout << endl;
+        cout << "End point: ";
+        cout << "(" << x2 << "," << y2 << ")";
+    }
+};
+
+int main() {
+    int x1, y1, x2, y2;
+
+    cin >> x1;
+    cin >> y1;
+
+    cin >> x2;
+    cin >> y2;
+
+    Line l(x1, y1, x2, y2);
+
+    cout << "The line is:\n";
+    l.display();
+
+    return 0;
+}
+
+
+
+
+
+Problem statement
+
+
+
+Amir is tasked with creating a program that allows users to input information about cars and sports cars. The program should be able to store and display details such as the make, model, year of production, and speed of a sports car.
+
+
+
+Create a class named Car represents a generic car and has private data members make, model, and year, representing the make (manufacturer), model, and year of production of the car, respectively. It has member functions to set and get these attributes. The class also has a virtual function, findSpeed(), which by default returns a base value of 0.
+
+
+
+Create a class named SportsCar, which is derived from the Car class and represents a sports car. It has an additional private data member, maxSpeed, representing the maximum speed of the sports car in km/h. The class has a constructor that takes the maximum speed as an argument and sets it accordingly. The findSpeed() function is overridden in this class to return the maximum speed of the sports car.
+
+
+
+In the main function, the program prompts the user to input details about a generic car (make, model, and year) and a sports car (maximum speed in km/h). It then creates objects of the respective classes and displays the car details, including the speed for the sports car.
+
+Input format :
+The input consists of the following:
+
+
+
+The first two lines of input contain strings that represent the make and model of the car.
+
+The next line of input contains an integer representing the year of production of the car.
+
+The last line of input contains an integer representing the maximum speed of the sports car in km/h.
+
+Output format :
+The output consists of the following:
+
+
+
+The first three lines display the details of the car:
+
+The first line shows the make of the car.
+
+The second line shows the model of the car.
+
+The third line shows the year of production of the car.
+
+The last line displays the speed of the sports car in km/h.
+
+
+
+Refer to the sample output for format specifications.
+
+Code constraints :
+The strings for the make and model of the car contain only alphanumeric characters and spaces.
+
+The year of production is an integer between 1000 and 9999 (4-digit year).
+
+The maximum speed of the sports car is an integer between 0 and 500 km/h.
+
+Sample test cases :
+Input 1 :
+Aluminium
+i20
+2020
+250
+Output 1 :
+Make of the car is: Aluminium
+Model of the car is: i20
+Year of the car is: 2020
+Speed of the sports car is: 250 km/h
+
+
+
+// You are using GCC
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Car {
+private:
+    string make, model;
+    int year;
+
+public:
+    void setMake(string m) {
+        make = m;
+    }
+    void setModel(string m) {
+        model = m;
+    }
+    void setYear(int y) {
+        year = y;
+    }
+    string getMake() {
+        return make;
+    }
+    string getModel() {
+        return model;
+    }
+    int getYear() {
+        return year;
+    }
+
+    virtual int findSpeed() {
+        return 0;
+    }
+};
+
+class SportsCar : public Car {
+private:
+    int maxSpeed;
+
+public:
+    SportsCar(int speed) : maxSpeed(speed) {}
+    int findSpeed() override {
+        return maxSpeed;
+    }
+};
+
+int main() {
+    Car car;
+    string make, model;
+    int year;
+    int speed;
+    getline(cin, make);
+    getline(cin, model);
+    cin >> year;
+    cin >> speed;
+    car.setMake(make);
+    car.setModel(model);
+    car.setYear(year);
+    cout << "Make of the car is: " << car.getMake() << endl;
+    cout << "Model of the car is: " << car.getModel() << endl;
+    cout << "Year of the car is: " << car.getYear() << endl;
+    SportsCar sportsCar(speed);
+    cout << "Speed of the sports car is: " << sportsCar.findSpeed() << " km/h" << endl;
+    return 0;
+}
+
+
+oblem statement
+
+
+
+Nithya is developing a simple inventory management system for a small shop. The shop owner wants to keep track of the prices of various items in the shop. Each item has a unique ID and a corresponding price. The shop owner wants to be able to add and update item prices as new items arrive or the prices change.
+
+
+
+To implement this inventory management system, you have created a base class called Shop, which has an array to store the item IDs and their prices. The Shop class also contains a pure virtual function, setPrice, which allows the derived classes to set the price of each item.
+
+
+
+The derived class ConcreteShop inherits from the base class Shop and provides its implementation for the setPrice function. The ConcreteShop class allows the shop owner to add or update the prices of items in the inventory.
+
+
+
+In the main function, you create an object of the ConcreteShop class named dukaan. The program prompts the user to enter the number of items they want to add or update in the inventory. For each item, the user provides the item ID and its price, and the program updates the inventory accordingly.
+
+Input format :
+The first line of input contains an integer n, representing the number of items to add or update in the inventory.
+
+The next n lines contain two space-separated integers, id and price, each representing the item ID and its corresponding price.
+
+Output format :
+If there are n items, the program will output n lines, each containing the price of the item with the corresponding ID.
+
+
+
+Refer to the sample output for the formatting specifications.
+
+Code constraints :
+The number of items, n, is a positive integer.1 ≤ n ≤ 100
+
+Each item ID is unique and within the range of 1 to 1000.
+
+Each item's price is a non-negative integer within the range of 0 to 10000.
+
+Sample test cases :
+Input 1 :
+3
+1 100
+2 200
+3 300
+Output 1 :
+The Price of item with Id 1 is 100
+The Price of item with Id 2 is 200
+The Price of item with Id 3 is 300
+Input 2 :
+4
+11 25
+22 54
+33 72
+44 90
+Output 2 :
+The Price of item with Id 11 is 25
+The Price of item with Id 22 is 54
+The Price of item with Id 33 is 72
+The Price of item with Id 44 is 90
+
+
+// You are using GCC
+#include <iostream>
+using namespace std;
+
+class Shop
+{
+protected:
+    int itemId[100];
+    int itemPrice[100];
+    int counter;
+
+public:
+    Shop() { counter = 0; } // Constructor to initialize the counter
+
+    virtual void setPrice(int id, int price)
+    {
+        itemId[counter] = id;
+        itemPrice[counter] = price;
+        counter++;
+    }
+
+    void displayPrice(int n)
+    {
+        for (int i = 0; i < n; i++)
+        {
+            cout << "The Price of item with Id " << itemId[i] << " is " << itemPrice[i] << endl;
+        }
+    }
+};
+
+class ConcreteShop : public Shop
+{
+public:
+    void setPrice(int id, int price) override
+    {
+        itemId[counter] = id;
+        itemPrice[counter] = price;
+        counter++;
+    }
+};
+
+
+int main()
+{
+    ConcreteShop dukaan;
+    int n;
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+    {
+        int id, price;
+        cin >> id;
+        cin >> price;
+        dukaan.setPrice(id, price);
+    }
+
+    dukaan.displayPrice(n);
+
+    return 0;
+}
+
+
+
+Single File Programming Question
+Problem statement
+
+
+
+Marc is working as a software developer for a scientific research institute, and his team is currently investigating various types of interesting numbers. One such type is the "Neon Number." A neon number is a special type of positive integer where the sum of the digits of its square is equal to the original number.
+
+
+
+Your task is to develop a program that can efficiently determine whether a given positive integer is a neon number or not,  while also implementing a virtual destructor for appropriate memory management.
+
+
+
+For Example,
+
+N = 9
+
+Then, 9^2=81 =>8+1=9
+
+So, 9 is a neon number.
+
+Input format :
+The first line of the input represents the neon number.
+
+Output format :
+The output displays whether the number is a neon number or not.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+N < 20
+
+Sample test cases :
+Input 1 :
+8
+Output 1 :
+8 it's Not a Neon Number.
+Input 2 :
+1
+Output 2 :
+1  it's a Neon Number.
+Input 3 :
+6543
+Output 3 :
+Enter a valid number.
+Whitelist
+
+
+// You are using GCC
+#include <iostream>
+using namespace std;
+
+class Main {
+public:
+    Main(int num) {
+        if (num <= 20) {
+            int square = num * num;
+            int sum = 0;
+            while (square != 0) {
+                int a = square % 10;
+                sum = sum + a;
+                square = square / 10;
+            }
+            if (sum == num) {
+                cout << num << "  it's a Neon Number." << endl;
+            } else {
+                cout << num << " it's Not a Neon Number." << endl;
+            }
+        } else {
+            cout << "Enter a valid number." << endl;
+        }
+    }
+
+    virtual ~Main() {}
+};
+
+int main() {
+    int n;
+    cin >> n;
+    Main obj(n);
+    return 0;
+}
+
+
+
+Problem Statement
+
+
+
+Akshitha is tasked with developing a program to determine the day of the week based on a given integer input representing a day number (1 to 7). In this scenario, each integer from 1 to 7 corresponds to a specific day of the week, as follows:
+
+
+
+1: Sunday
+
+2: Monday
+
+3: Tuesday
+
+4: Wednesday
+
+5: Thursday
+
+6: Friday
+
+7: Saturday
+
+
+
+The program should take an integer input from the user representing the day number and output the corresponding day of the week. If the input is not within the range of 1 to 7, the program should print "Invalid."
+
+
+
+You need to create a class named Main that handles this functionality. The constructor of the class Main takes an integer argument representing the day number. The class should then determine the day of the week based on the input and print the result to the console.
+
+
+
+You should also ensure that the class Main has a virtual destructor to allow for proper cleanup when deleting objects through a base-class pointer.
+
+Input format :
+The input is a single integer d, representing the day number.
+
+Output format :
+The output displays a string representing the corresponding day of the week. If the input d is within the range of 1 to 7, the program should output the day of the week.
+
+If the input d is outside this range, the program should output "Invalid".
+
+
+
+Refer to the sample output for the formatting specification.
+
+Code constraints :
+1 <= d <= 7
+
+Sample test cases :
+Input 1 :
+7
+Output 1 :
+Saturday
+Input 2 :
+0
+Output 2 :
+Invalid
+Input 3 :
+9
+Output 3 :
+Invalid
+
+
+
+
+// You are using GCC
+#include <iostream>
+using namespace std;
+
+class Main {
+public:
+    Main(int day) {
+        if (day <= 7 && day>=1) {
+            switch (day) {
+                case 1:
+                    cout << "Sunday";
+                    break;
+                case 2:
+                    cout << "Monday";
+                    break;
+                case 3:
+                    cout << "Tuesday";
+                    break;
+                case 4:
+                    cout << "Wednesday";
+                    break;
+                case 5:
+                    cout << "Thursday";
+                    break;
+                case 6:
+                    cout << "Friday";
+                    break;
+                case 7:
+                    cout << "Saturday";
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            cout << "Invalid";
+        }
+    }
+
+    virtual ~Main() {}
+
+};
+
+int main() {
+    int d;
+    cin >> d;
+    Main obj(d);
+
+    return 0;
+}
+
+
+
+Problem Statement
+
+
+
+Santhosh is designing a painting application that allows users to select a color and paint on a digital canvas. Your task is to enhance the painting application by adding a user-friendly menu that prompts the user to choose a color to paint on the canvas. The user can input either 'R' or 'r' to select the Red color or 'B' or 'b' to select the Blue color.
+
+
+
+Write a program to implement runtime polymorphism. The program should define a base class "Color" with a virtual function "paint" and two derived classes "RedPaint" and "BluePaint" that override the "paint()" function to paint with the respective colors.
+
+
+
+The program should use runtime polymorphism to create either a "RedPaint" or "BluePaint" object based on user input and call the "paint()" function to paint with the chosen color.
+
+
+
+Note: This kind of question will help in clearing Cocubes recruitment.
+
+Input format :
+The input consists of a single character representing the color to paint, where "R" or "r" represents the red color and "B" or "b" represents a blue color.
+
+Output format :
+The program should output the message "I'm Painting with Red Color." if the user inputs 'R' or 'r', or "I'm Painting with Blue Color."
+
+
+
+If the user inputs "B" or "b". If the user inputs any other character, the program should output "Invalid choice!" and terminate.
+
+
+
+Refer to the sample output for the formatting specifications.
+
+Code constraints :
+The user's input must be a single character.
+
+The user can only enter 'R', 'r', 'B', or 'b' to select a color. Any other character will be considered an invalid choice.
+
+Sample test cases :
+Input 1 :
+R
+Output 1 :
+I'm Painting with Red color.
+Input 2 :
+B
+Output 2 :
+I'm Painting with Blue color.
+
+
+
+// You are using GCC
+
+#include <iostream>
+
+#include <string>
+
+using namespace std;
+
+
+
+
+class Color {
+
+public:
+
+virtual void paint() {
+
+cout << "I'm Painting.";
+
+}
+
+};
+
+class RedPaint : public Color {
+
+public:
+
+void paint() {
+
+cout << "I'm Painting with Red color.";
+
+}
+
+};
+
+class BluePaint : public Color {
+
+public:
+
+void paint() {
+
+cout << "I'm Painting with Blue color.";
+
+}
+
+};
+
+
+
+
+int main() {
+
+Color* c;
+
+char choice;
+
+
+
+
+//cout << "Enter color to paint (R for red, B for blue): ";
+
+cin >> choice;
+
+
+
+
+if (choice == 'R' || choice == 'r') {
+
+c = new RedPaint();
+
+}
+
+else if (choice == 'B' || choice == 'b') {
+
+c = new BluePaint();
+
+}
+
+else {
+
+cout << "Invalid choice!";
+
+return 0;
+
+}
+
+
+
+
+c->paint();
+
+
+
+
+delete c;
+
+return 0;
+
+} 
+
+
+Problem Statement
+
+
+
+Kaniska is tasked with creating a program that allows users to input information about different types of vehicles and calculate the time it takes for these vehicles to travel a given distance at their maximum speeds. The program will support three types of vehicles: Cars, Bicycles, and Boats.
+
+
+
+Your task is to implement the Vehicle class as the base class for these three vehicle types. The Vehicle class should have the following properties and functionalities:
+
+
+
+Properties:
+
+numOfWheels (integer): representing the number of wheels of the vehicle.
+
+maxSpeed (floating-point): representing the maximum speed of the vehicle.
+
+
+
+Functionalities:
+
+A default constructor to initialize numOfWheels and maxSpeed to 0.
+
+A virtual function setNumOfWheels(int wheels) to set the number of wheels of the vehicle.
+
+A virtual function setMaxSpeed(float speed) to set the maximum speed of the vehicle.
+
+A virtual function getNumOfWheels() to get the number of wheels on the vehicle.
+
+A virtual function getMaxSpeed() to get the maximum speed of the vehicle.
+
+A virtual function timeToTravel(float distance) that calculates and returns the time it takes for the vehicle to travel the given distance at its maximum speed.
+
+
+
+Implement three derived classes, Car, Bicycle, and Boat, which inherit from the Vehicle class. Each derived class should override the timeToTravel(float distance) function with the appropriate calculation for the specific vehicle type. The Car and Bicycle classes should calculate the time based on their maximum speed in mph, while the Boat class should consider the maximum speed in knots and convert it to mph using the formula 1 knot = 1.151 mph.
+
+
+
+In the main function, create instances of each vehicle type (Car, Bicycle, and Boat) and take user input for the number of wheels and maximum speed for each vehicle. Then, the user will input a distance, and the program will display the details of each vehicle and the time it takes for each vehicle to travel the given distance at its maximum speed.
+
+
+
+Note: This kind of question will help in clearing Capgemini recruitment.
+
+Input format :
+The first line consists of the number of wheels and the maximum speed of the car, separated by a single space.
+
+The third line consists of the number of wheels and the maximum speed of the bicycle, separated by a single space.
+
+The fifth line consists of the maximum speed of the boat (in knots).
+
+The sixth line consists of the distance to travel (in miles).
+
+Output format :
+The program outputs the details of the car, bicycle, and boat, including the number of wheels and the maximum speed for each vehicle, as well as the time it would take to travel the specified distance at maximum speed.
+
+The output includes the vehicle type, number of wheels, maximum speed, and time taken to travel the distance.
+
+The time taken is displayed in hours.
+
+
+
+Refer to the sample input and output for format specifications.
+
+Code constraints :
+The number of wheels (numOfWheels) for each vehicle is a positive integer.
+
+The maximum speed (maxSpeed) for each vehicle is a positive floating-point number.
+
+The distance to travel is a positive floating-point number.
+
+The maximum speed of the Boat (in knots) should be converted to mph using the formula: 1 knot = 1.151 mph.
+
+Sample test cases :
+Input 1 :
+4 60
+2 15
+30
+50
+Output 1 :
+Vehicle Details:
+Car has 4 wheels and can go up to 60 mph. It would take 0.833333 hours to travel 50 miles at maximum speed.
+Bicycle has 2 wheels and can go up to 15 mph. It would take 3.33333 hours to travel 50 miles at maximum speed.
+Boat has 0 wheels and can go up to 30 knots. It would take 1.44802 hours to travel 50 miles at maximum speed.
+Input 2 :
+4 90
+2 20
+35
+75
+Output 2 :
+Vehicle Details:
+Car has 4 wheels and can go up to 90 mph. It would take 0.833333 hours to travel 75 miles at maximum speed.
+Bicycle has 2 wheels and can go up to 20 mph. It would take 3.75 hours to travel 75 miles at maximum speed.
+Boat has 0 wheels and can go up to 35 knots. It would take 1.86174 hours to travel 75 miles at maximum speed.
+
+
+
+// You are using GCC
+
+#include <iostream>
+
+using namespace std;
+
+
+
+
+class Vehicle {
+
+protected:
+
+int numOfWheels;
+
+float maxSpeed;
+
+
+
+
+public:
+
+Vehicle() : numOfWheels(0), maxSpeed(0.0) {}
+
+
+
+
+virtual void setNumOfWheels(int wheels) {
+
+numOfWheels = wheels;
+
+}
+
+
+
+
+virtual void setMaxSpeed(float speed) {
+
+maxSpeed = speed;
+
+}
+
+
+
+
+virtual int getNumOfWheels() {
+
+return numOfWheels;
+
+}
+
+
+
+
+virtual float getMaxSpeed() {
+
+return maxSpeed;
+
+}
+
+
+
+
+virtual float timeToTravel(float distance) {
+
+return 0.0;
+
+}
+
+};
+
+
+
+
+class Car : public Vehicle {
+
+public:
+
+float timeToTravel(float distance) {
+
+return distance / maxSpeed;
+
+}
+
+};
+
+
+
+
+class Bicycle : public Vehicle {
+
+public:
+
+float timeToTravel(float distance) {
+
+return distance / maxSpeed;
+
+}
+
+};
+
+
+
+
+class Boat : public Vehicle {
+
+public:
+
+float timeToTravel(float distance) {
+
+return distance / (maxSpeed * 1.151); // Convert knots to mph
+
+}
+
+};
+
+
+
+
+int main() {
+
+Car car;
+
+Bicycle bike;
+
+Boat boat;
+
+
+
+
+int num;
+
+float speed;
+
+
+
+
+cin >> num;
+
+car.setNumOfWheels(num);
+
+
+
+
+cin >> speed;
+
+car.setMaxSpeed(speed);
+
+
+
+
+cin >> num;
+
+bike.setNumOfWheels(num);
+
+
+
+
+cin >> speed;
+
+bike.setMaxSpeed(speed);
+
+
+
+
+cin >> speed;
+
+boat.setMaxSpeed(speed);
+
+
+
+
+float distance;
+
+cin >> distance;
+
+
+
+
+cout << "Vehicle Details:" << endl;
+
+cout << "Car has " << car.getNumOfWheels() << " wheels and can go up to " << car.getMaxSpeed() << " mph. It would take " << distance / car.getMaxSpeed() << " hours to travel " << distance << " miles at maximum speed." << endl;
+
+cout << "Bicycle has " << bike.getNumOfWheels() << " wheels and can go up to " << bike.getMaxSpeed() << " mph. It would take " << distance / bike.getMaxSpeed() << " hours to travel " << distance << " miles at maximum speed." << endl;
+
+cout << "Boat has " << boat.getNumOfWheels() << " wheels and can go up to " << boat.getMaxSpeed() << " knots. It would take " << distance / (boat.getMaxSpeed() * 1.151) << " hours to travel " << distance << " miles at maximum speed." << endl;
+
+
+
+
+return 0;
+
+} 
+
+
+Problem Statement
+
+
+
+Bavani is tasked with designing a simple Vehicle Ride Booking System. The system should have two types of vehicles: "Vehicle" and "MotorBike".
+
+
+
+Write a program to illustrate dynamic polymorphism and create two classes: Vehicle and Motorbike. The class Motorbike inherits the Vehicle class.
+
+
+
+Create a method called move() in the base class that takes a string as input and prints it.
+
+Override the method move() in the derived class, which also takes a string as input and prints it.
+
+
+
+Note: This kind of question will help in clearing Accenture recruitment.
+
+Input format :
+The input consists of two strings on separate lines.
+
+Output format :
+The output prints the two strings in separate lines.
+
+Code constraints :
+Both "str1" and "str2" consist of only printable ASCII characters.
+
+The length of each string "str1" and "str2" does not exceed 100 characters.
+
+Sample test cases :
+Input 1 :
+HeroHonda
+Suzuki
+Output 1 :
+HeroHonda
+Suzuki
+
+
+// You are using GCC
+
+#include<bits/stdc++.h>
+
+#include<string>
+
+using namespace std;
+
+
+
+
+class Vehicle {
+
+public:
+
+void move(string s1) {
+
+cout<<s1<<"\n";
+
+}
+
+};
+
+
+
+
+class MotorBike : public Vehicle {
+
+public:
+
+void move(string s2) {
+
+cout<<s2<<"\n";
+
+}
+
+};
+
+
+
+
+int main(){
+
+string str1,str2;
+
+cin >> str1 >> str2;
+
+Vehicle v;
+
+v.move(str1);
+
+Vehicle v1;
+
+v1.move(str2);
+
+} 
+
+
+Single File Programming Question
+Function Overloading:
+
+
+
+An ice cream vendor sells his ice cream in cone-shaped (radius r and height h) and square-shaped (side r) containers. However, he is unsure of the quantity that can be filled in the two containers.
+
+
+
+You are required to write a program that prints the volume of the containers, given their respective dimensions as input. Your class must be named "Icecream," which has two methods with the same name, "Quantity," each having the respective dimensions of the containers as the parameters. 
+
+
+
+Function Prototype:
+
+Quantity(int r, int h)
+
+Quantity(int r)
+
+
+
+Formulas:
+
+A cone's volume is equal to 0.33*pi*r*r*h.
+
+The volume of a square is r*r*r.
+
+
+
+Note: Use M_PI for pi
+
+
+
+Note: This kind of question will help in clearing Amcat recruitment.
+
+Input format :
+The first line of the input consists of the choice (1 for square, 2 for cone).
+
+If the choice is 1, enter the side of the square.
+
+If the choice is 2, enter the radius and height of the cone, separated by a space.
+
+
+
+Note: The input type should be an integer.
+
+Output format :
+The output must display the volume of the container, rounded off to two decimal places, for which the dimensions are given.
+
+
+
+Refer to the sample output for format specifications.
+
+Code constraints :
+The integer "n" will be either 1 or 2.
+
+1 ≤ "r", "h" ≤ 106 (radius and height of the ice cream).
+
+The output will have a precision of 2 decimal places.
+
+Sample test cases :
+Input 1 :
+1
+4
+Output 1 :
+64.00
+Input 2 :
+2
+4 5
+Output 2 :
+82.94
+
+
+
+// You are using GCC
+
+#include <bits/stdc++.h>
+
+#include<cmath>
+
+using namespace std;
+
+class Icecream {
+
+public:
+
+float Quantity(int r) {
+
+return r*r*r;
+
+}
+
+float Quantity(int r, int h) {
+
+return 0.33*M_PI*r*r*h;
+
+}
+
+};
+
+int main() {
+
+Icecream obj;
+
+int i,n,r,h;
+
+cin>>n;
+
+if(n==1) {
+
+cin>>r;
+
+cout<<fixed<<setprecision(2)<<obj.Quantity(r);
+
+}
+
+if(n==2) {
+
+cin>>r>>h;
+
+cout<<fixed<<setprecision(2)<<obj.Quantity(r,h);
+
+}
+
+return 0;
+
+} 
+
+
+
+
+Problem Statement
+
+
+
+Gowtham is required to implement a basic class hierarchy for a program that deals with numerical data. The hierarchy consists of a base class Demo and a derived class, Derived.
+
+
+
+Implement the Demo class with the following specifications:
+
+Private members: num1 and num2 of type int
+Public constructor: Accepts two integers, n1 and n2, and initializes num1 with n1 and num2 with n2.
+Public member functions:
+int getNum1() const: Returns the value of num1.
+
+int getNum2() const: Returns the value of num2.
+
+virtual void display(): Prints the values of num1 and num2.
+
+
+
+Implement the Derived class, which is derived from the Demo class, with the following specifications:
+
+Public constructor: Accepts two integers, n1 and n2, and passes them to the base class constructor.
+Public member function:
+void display(): Overrides the display() function in the base class and prints the values of num1 and num2 with a prefix "Derived - ".
+
+
+
+You need to implement the classes and demonstrate their functionality in the main() function. The main() function should take two integer inputs from the user and create an object of the Derived class using these input values. It should then display the values using the overridden display() method and delete the dynamically allocated object using a base class pointer to avoid any memory leaks.
+
+
+
+Note: The program should display appropriate messages indicating the constructor and destructor calls for each class.
+
+
+
+Note: This kind of question will help in clearing Accenture recruitment.
+
+Input format :
+The input consists of the numbers to be assigned to n1 and n2, respectively, separated by a space.
+
+Output format :
+Messages indicating the constructor and destructor calls for each class.
+
+The derived class-specific display output
+
+
+
+Refer to the sample output for the formatting specifications.
+
+Code constraints :
+n1, n2 > 0
+
+Sample test cases :
+Input 1 :
+10 20
+Output 1 :
+Inside Demo Constructor
+Inside Derived Constructor
+Derived - Number 1: 10
+Derived - Number 2: 20
+Inside Derived Destructor
+Inside Demo Destructor
+
+
+
+// You are using GCC
+
+#include <iostream>
+
+using namespace std;
+
+
+
+
+class Demo {
+
+private:
+
+int num1, num2;
+
+
+
+
+public:
+
+Demo(int n1, int n2) : num1(n1), num2(n2) {
+
+cout << "Inside Demo Constructor" << endl;
+
+}
+
+
+
+
+int getNum1() const {
+
+return num1;
+
+}
+
+
+
+
+int getNum2() const {
+
+return num2;
+
+}
+
+
+
+
+virtual void display() {
+
+cout << "Number 1: " << num1 << endl;
+
+cout << "Number 2: " << num2 << endl;
+
+}
+
+
+
+
+virtual ~Demo() {
+
+cout << "Inside Demo Destructor";
+
+}
+
+};
+
+
+
+
+class Derived : public Demo {
+
+public:
+
+Derived(int n1, int n2) : Demo(n1, n2) {
+
+cout << "Inside Derived Constructor" << endl;
+
+}
+
+
+
+
+void display() override {
+
+cout << "Derived - Number 1: " << getNum1() << endl;
+
+cout << "Derived - Number 2: " << getNum2() << endl;
+
+}
+
+
+
+
+~Derived() override {
+
+cout << "Inside Derived Destructor" << endl;
+
+}
+
+};
+
+
+
+
+int main() {
+
+int n1, n2;
+
+cin >> n1 >> n2;
+
+
+
+
+Demo* obj = new Derived(n1, n2);
+
+obj->display();
+
+
+
+
+delete obj;
+
+
+
+
+return 0;
+
+} 
+
+
+

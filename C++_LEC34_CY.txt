@@ -1,0 +1,898 @@
+/****************************
+Manish Kumar
+****************************/
+
+
+
+Problem statement
+
+
+
+In an eco-conscious household, a smart energy monitoring system is implemented to track electricity usage for three key appliances: a Fan, a Light, and a TV.
+
+
+
+The system has three classes: "Fan," "Light," and "TV" - all inheriting from a base class named "currentBill." Each class includes attributes for the watts (power consumption) and the number of hours the appliance is used.
+
+
+
+When the user interacts with the system, they provide the power consumption (in watts) and the usage hours for each appliance. The system then calculates the electricity consumption for each device, converting it to kilowatt-hours (kWh) based on the formula (watts * hours / 1000). The energy cost is assumed to be $1.5 per kWh.
+
+
+
+Write a program using virtual functions to accomplish this task.
+
+Input format :
+The first line consists of the power rating of the fan and the total hours used, separated by space.
+
+The second line consists of the power rating of Light and the total hours used, separated by space.
+
+The third line consists of the power rating of the TV and the total hours used, separated by space.
+
+Output format :
+The output prints the bill amount, rounding off to two decimal places.
+
+Code constraints :
+Power rating > 0
+
+Total hours > 0
+
+Sample test cases :
+Input 1 :
+40 123
+55 200
+33 400
+Output 1 :
+43.68
+
+
+// You are using GCC
+#include <iostream>
+
+using namespace std;
+class currentBill{
+    public:
+   
+    virtual double amount()=0;
+};
+
+class Fan: public currentBill{
+    public:
+    int watts,hrs;
+    double amount(){
+        double t=watts*hrs;
+        double a= (t/1000)*1.5;
+        return a;
+    }
+};
+
+class Light: public currentBill{
+    public:
+    int watts,hrs;
+    double amount(){
+        double t=watts*hrs;
+        double a= (t/1000)*1.5;
+        return a;
+    }
+};
+class TV: public currentBill{
+    public:
+    int watts,hrs;
+    double amount(){
+        double t=watts*hrs;
+        double a= (t/1000)*1.5;
+        return a;
+    }
+};
+int main()
+{
+   Fan f;
+   cin>>f.watts>>f.hrs;
+   Light l;
+   cin>>l.watts>>l.hrs;
+   TV t;
+   cin>>t.watts>>t.hrs;
+   cout<<f.amount()+l.amount()+t.amount();
+   return 0;
+}
+
+
+Problem Statement
+
+
+
+A car rental company wants to calculate the total cost of a rental based on the number of days and the type of car rented. The company has set rental rates for different car types, which are stored in the following constants:
+
+
+
+ECONOMY_RATE: $40.00 per day
+
+COMPACT_RATE: $50.00 per day
+
+STANDARD_RATE: $60.00 per day
+
+
+
+The program should take as input the number of days and the type of car. The type of car is an optional parameter with a default value of "Economy". The program defines a base class "car" with the virtual function "calculateRentalCost" and three derived classes "EconomyCar", "CompactCar" and "StandardCar" override "calculateRentalCost" to calculate the total cost of the rental.
+
+
+
+Function signature:
+
+double calculateRentalCost(int numDays, string carType = "Economy")
+
+
+
+Note: This kind of question will help in clearing Wipro recruitment.
+
+Input format :
+An integer numDays (1 <= numDays <= 365), the number of days of the rental.
+
+A string carType, the type of car (either "Economy", "Compact", or "Standard").
+
+Output format :
+If the carType is one of the valid types, output double, the total cost of the rental, rounded to 2 decimal places.
+
+If the carType is not valid, output "Invalid car type."
+
+Code constraints :
+The rental rates for different car types are stored in constants and cannot be changed.
+
+If carType is not specified, the default value is "Economy".
+
+The number of days is an integer between 1 and 365, inclusive.
+
+The output should be rounded to two decimal places.
+
+The program should use the calculateRentalCost function to calculate the rental cost.
+
+Sample test cases :
+Input 1 :
+3 Compact
+Output 1 :
+The total cost of the rental is $150
+Input 2 :
+5 Economy
+Output 2 :
+The total cost of the rental is $200
+Input 3 :
+5 SUV
+Output 3 :
+Invalid car type.
+Input 4 :
+2 Standard
+Output 4 :
+The total cost of the rental is $120
+
+// You are using GCC
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Car {
+public:
+    virtual double calculateRentalCost(int numDays) = 0;
+};
+
+class EconomyCar : public Car {
+public:
+    virtual double calculateRentalCost(int numDays) override {
+        const double ECONOMY_RATE = 40.0;
+        return ECONOMY_RATE * numDays;
+    }
+};
+
+class CompactCar : public Car {
+public:
+    virtual double calculateRentalCost(int numDays) override {
+        const double COMPACT_RATE = 50.0;
+        return COMPACT_RATE * numDays;
+    }
+};
+
+class StandardCar : public Car {
+public:
+    virtual double calculateRentalCost(int numDays) override {
+        const double STANDARD_RATE = 60.0;
+        return STANDARD_RATE * numDays;
+    }
+};
+
+int main() {
+    int numDays;
+    string carType = "Economy";
+    cin >> numDays;
+    cin >> carType;
+
+    Car* car = nullptr;
+
+    if (carType == "Economy") {
+        car = new EconomyCar();
+    } else if (carType == "Compact") {
+        car = new CompactCar();
+    } else if (carType == "Standard") {
+        car = new StandardCar();
+    } else {
+        cout << "Invalid car type." << endl;
+        return 0;
+    }
+
+    double rentalCost = car->calculateRentalCost(numDays);
+    delete car;
+
+    cout << "The total cost of the rental is $" << rentalCost << endl;
+
+    return 0;
+}
+
+
+
+Problem Statement
+
+
+
+Kamalesh is building a spell-checking system for a word-processing application. He needs to write a program that calculates the minimum number of operations required to transform one word into another.
+
+
+
+Specifically, the program takes two strings as input and computes their edit distance. The program defines a base class "EditDistanceCalculator" with a pure virtual function "min" and a derived class "MinEditDistanceCalculator" override the "min" function to calculate the minimum edit distance. Write a program to accomplish this task.
+
+
+
+Example
+
+
+
+Input:
+
+kitten
+
+sitting
+
+
+
+Output:
+
+The edit distance between kitten and sitting is 3
+
+
+
+Explanation:
+
+To transform "kitten" into "sitting", we can perform the following operations:
+
+Substitute "s" for "k": sitten
+Substitute "i" for "e": sittin
+Insert "g" at the end: sitting
+Thus, the minimum number of operations required to transform "kitten" into "sitting" is 3.
+
+Input format :
+The input consists of two strings on separate lines.
+
+Output format :
+The output displays the edit distance between the strings.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+Length of string1<=100
+
+Length of string2<=100
+
+Sample test cases :
+Input 1 :
+kitten
+sitting
+Output 1 :
+Edit distance between kitten and sitting is 3
+Input 2 :
+intention
+execution
+Output 2 :
+Edit distance between intention and execution is 5
+
+
+
+// You are using GCC
+#include <iostream>
+#include <string>
+using namespace std;
+
+class EditDistanceCalculator {
+public:
+    virtual int min(int x, int y, int z) = 0;
+
+    int edit_distance(string str1, string str2) {
+        int len1 = str1.length();
+        int len2 = str2.length();
+        int dist[len1 + 1][len2 + 1];
+
+        for (int i = 0; i <= len1; i++) {
+            for (int j = 0; j <= len2; j++) {
+                if (i == 0) {
+                    dist[i][j] = j;
+                } else if (j == 0) {
+                    dist[i][j] = i;
+                } else if (str1[i - 1] == str2[j - 1]) {
+                    dist[i][j] = dist[i - 1][j - 1];
+                } else {
+                    dist[i][j] = 1 + min(dist[i][j - 1], dist[i - 1][j], dist[i - 1][j - 1]);
+                }
+            }
+        }
+
+        return dist[len1][len2];
+    }
+};
+
+class MinEditDistanceCalculator : public EditDistanceCalculator {
+public:
+    int min(int x, int y, int z) override {
+        if (x < y && x < z) {
+            return x;
+        } else if (y < x && y < z) {
+            return y;
+        } else {
+            return z;
+        }
+    }
+};
+
+int main() {
+    string str1, str2;
+    cin >> str1 >> str2;
+
+    MinEditDistanceCalculator calculator;
+    int dist = calculator.edit_distance(str1, str2);
+    cout << "Edit distance between " << str1 << " and " << str2 << " is " << dist << endl;
+
+    return 0;
+}
+
+
+Problem statement
+
+
+
+Sheela is developing a billing system for a supermarket. The supermarket has a loyalty program where customers earn reward points based on the total amount spent during their shopping. To calculate reward points, she needs to implement a function that takes an array of transaction amounts and finds the sum of the digits of each transaction amount.
+
+
+
+If the sum of digits is more than one digit, further add the digits until a single-digit result is obtained. Finally, the total reward points earned by the customer will be the sum of these single-digit results.
+
+
+
+The program defines a base class "SummationCalculator" with a pure virtual function "sum" and a derived class "SimpleSummationCalculator" that overrides the "sum" function to calculate the sum of the digits. Write a program to accomplish this task.
+
+
+
+
+
+Function Prototype: int sum(int a[ ],int n);
+
+
+
+Example:
+
+Input:
+
+5
+
+111 234 121 900 101
+
+Output:
+
+9
+
+Explanation:
+
+111 = 1 + 1 + 1 = 3
+
+234 = 2 + 3 + 4 = 9
+
+121 = 1 + 2 + 1 = 4
+
+900 = 9 + 0 + 0 = 9
+
+101 = 1 + 0 + 1 = 2
+
+
+
+The sum of the digits of all the given numbers is 3 + 9 + 4 + 9 + 2 = 27.
+
+So, the final output is 2+ 7 = 9.
+
+
+
+Input format :
+The first line of the input consists of a single value, n.
+
+The next line consists of an array of elements separated by a space.
+
+Output format :
+The output prints the sum of the digits of all the numbers in the array.
+
+Code constraints :
+Array size < 100
+
+Array elements < 1000
+
+Sample test cases :
+Input 1 :
+5
+111 234 121 900 101
+Output 1 :
+9
+Whitelist
+
+
+// You are using GCC
+#include <iostream>
+using namespace std;
+
+class SummationCalculator {
+public:
+    virtual int sum(int a[], int n) = 0;
+};
+
+class SimpleSummationCalculator : public SummationCalculator {
+public:
+    int sum(int a[], int n) override {
+        int rem, sum2 = 0, sum1 = 0, i, digit;
+        for (i = 0; i < n; i++) {
+            while (a[i] != 0) {
+                digit = a[i] % 10;
+                sum1 += digit;
+                a[i] /= 10;
+            }
+        }
+        while (sum1 != 0) {
+            rem = sum1 % 10;
+            sum2 += rem;
+            sum1 /= 10;
+            if (sum2 > 9 && sum1 == 0) {
+                sum1 = sum2;
+                sum2 = 0;
+            }
+        }
+        return sum2;
+    }
+};
+
+int main() {
+    int n, i;
+    cin >> n;
+    int a[n];
+    for (i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+
+    SimpleSummationCalculator calculator;
+    int result = calculator.sum(a, n);
+    cout << result << endl;
+
+    return 0;
+}
+
+
+
+roblem Statement
+
+
+
+Max is an organizer of the school's science fair. His aim is to create an engaging program that introduces attendees to the delightful world of fruits and their tastes. The interactive program will be designed with a base class called Fruit, and it will have derived classes representing specific fruits such as Apple, Banana, Orange, Grape, and Pineapple.
+
+
+
+During the event, the attendees will have the opportunity to participate in a fruit tasting experience. The program will prompt the participants with a question like, "Which fruit would you like to taste?" and present a list of available options, including Apple, Banana, Orange, Grape, and Pineapple.
+
+
+
+Once a participant chooses a fruit, the program will display the taste of the selected fruit using the getTaste() function, which will be implemented in each derived class to return the respective taste of the fruit.
+
+
+
+Taste of the fruits:
+
+Apple: Sweet
+
+Banana: Creamy
+
+Orange: Tangy
+
+Grape: Juicy
+
+Pineapple: Sweet and Sour
+
+
+
+Example:
+
+Choose a fruit (1 = Apple, 2 = Banana, 3 = Orange, 4 = Grape, 5 = Pineapple): 1
+
+The taste of the fruit is: Sweet.
+
+
+
+Note: This kind of question will help in clearing Capgemini recruitment.
+
+Input format :
+The input consists of a single integer "n", which represents the user's choice of fruit.
+
+Output format :
+The output consists of a string indicating the taste of the chosen fruit.
+
+If an invalid input is entered, a default message will be displayed.
+
+
+
+Refer to the sample output for format specifications.
+
+Code constraints :
+The user's input should be a single integer.
+
+The user can only enter values from 1 to 5 to choose a fruit. Any other value will be considered an invalid choice, and the program will default to displaying "Generic fruit taste."
+
+Sample test cases :
+Input 1 :
+1
+Output 1 :
+The taste of the fruit is: Sweet
+Input 2 :
+8
+Output 2 :
+Invalid choice, defaulting to generic fruit.
+The taste of the fruit is: Generic fruit taste
+
+
+// You are using GCC
+
+#include <iostream>
+
+#include <string>
+
+
+
+
+class Fruit {
+
+public:
+
+virtual std::string getTaste() {
+
+return "Generic fruit taste";
+
+}
+
+};
+
+
+
+
+class Apple : public Fruit {
+
+public:
+
+std::string getTaste() override {
+
+return "Sweet";
+
+}
+
+};
+
+
+
+
+class Banana : public Fruit {
+
+public:
+
+std::string getTaste() override {
+
+return "Creamy";
+
+}
+
+};
+
+
+
+
+class Orange : public Fruit {
+
+public:
+
+std::string getTaste() override {
+
+return "Tangy";
+
+}
+
+};
+
+
+
+
+class Grape : public Fruit {
+
+public:
+
+std::string getTaste() override {
+
+return "Juicy";
+
+}
+
+};
+
+
+
+
+class Pineapple : public Fruit {
+
+public:
+
+std::string getTaste() override {
+
+return "Sweet and Sour";
+
+}
+
+};
+
+
+
+
+int main() {
+
+int choice;
+
+Fruit* fruit;
+
+
+
+
+//std::cout << "Choose a fruit (1 = Apple, 2 = Banana, 3 = Orange, 4 = Grape, 5 = Pineapple): ";
+
+std::cin >> choice;
+
+
+
+
+switch (choice) {
+
+case 1:
+
+fruit = new Apple();
+
+break;
+
+case 2:
+
+fruit = new Banana();
+
+break;
+
+case 3:
+
+fruit = new Orange();
+
+break;
+
+case 4:
+
+fruit = new Grape();
+
+break;
+
+case 5:
+
+fruit = new Pineapple();
+
+break;
+
+default:
+
+std::cout << "Invalid choice, defaulting to generic fruit." << std::endl;
+
+fruit = new Fruit();
+
+break;
+
+}
+
+
+
+
+std::cout << "The taste of the fruit is: " << fruit->getTaste() << std::endl;
+
+
+
+
+delete fruit;
+
+
+
+
+return 0;
+
+} 
+
+
+Problem Statement
+
+
+
+Implement a coffee shop ordering system using object-oriented programming. Define a base class CoffeeShop with a pure virtual function calculateTotal() and a virtual destructor ~CoffeeShop().
+
+
+
+Then create a derived class called CustomerOrder with the following private data members: coffeePrice, teaPrice, pastryPrice, coffeeQuantity, teaQuantity, and pastryQuantity.
+
+
+
+Write a constructor for CustomerOrder that takes in the six parameters and initializes the data members accordingly. Implement the calculateTotal() function in CustomerOrder to calculate the total cost of the order, which is the sum of the costs of the coffee, tea, and pastries ordered.
+
+
+
+Ensure that the program is properly memory-managed by using a virtual destructor in the base class and deleting the allocated object in main.
+
+
+
+Note: This kind of question will help in clearing mPhasis recruitment.
+
+Input format :
+The first line consists of the price of a cup of coffee in dollars (float) and the quantity of coffee cups (int).
+
+The second line consists of the price of a cup of tea in dollars (float) and the quantity of tea cups (int).
+
+The third line consists of the price of a pastry in dollars (float) and the quantity of pastries (int).
+
+Output format :
+The output consists of the total cost of the order displayed in dollars with two decimal places.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+The input values are positive and can have up to two decimal places.
+
+The quantities are non-negative integers.
+
+The floating-point numbers may not exceed the precision of the float data type.
+
+Sample test cases :
+Input 1 :
+2.5 1
+2.1 1
+1.5 2
+Output 1 :
+Total cost of the order is $7.6
+Input 2 :
+3.1 2
+2.5 3
+2.2 1
+Output 2 :
+
+// You are using GCC
+
+#include <iostream>
+
+using namespace std;
+
+
+
+
+class CoffeeShop {
+
+public:
+
+virtual void calculateTotal() = 0;
+
+
+
+
+virtual ~CoffeeShop() {}
+
+};
+
+
+
+
+class CustomerOrder : public CoffeeShop {
+
+private:
+
+float coffeePrice;
+
+float teaPrice;
+
+float pastryPrice;
+
+int coffeeQuantity;
+
+int teaQuantity;
+
+int pastryQuantity;
+
+
+
+
+public:
+
+CustomerOrder(float cPrice, float tPrice, float pPrice, int cQuantity, int tQuantity, int pQuantity) {
+
+coffeePrice = cPrice;
+
+teaPrice = tPrice;
+
+pastryPrice = pPrice;
+
+coffeeQuantity = cQuantity;
+
+teaQuantity = tQuantity;
+
+pastryQuantity = pQuantity;
+
+}
+
+
+
+
+void calculateTotal() override {
+
+float total = (coffeePrice * coffeeQuantity) + (teaPrice * teaQuantity) + (pastryPrice * pastryQuantity);
+
+cout << "Total cost of the order is $" << total << endl;
+
+}
+
+};
+
+
+
+
+int main() {
+
+float coffeePrice, teaPrice, pastryPrice;
+
+int coffeeQuantity, teaQuantity, pastryQuantity;
+
+
+
+
+cin >> coffeePrice;
+
+cin >> coffeeQuantity;
+
+cin >> teaPrice;
+
+cin >> teaQuantity;
+
+cin >> pastryPrice;
+
+cin >> pastryQuantity;
+
+
+
+
+CoffeeShop* order = new CustomerOrder(coffeePrice, teaPrice, pastryPrice, coffeeQuantity, teaQuantity, pastryQuantity);
+
+order->calculateTotal();
+
+delete order;
+
+
+
+
+return 0;
+
+} 
+
+
+
+

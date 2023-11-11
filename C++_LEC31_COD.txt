@@ -1,0 +1,1814 @@
+/****************************
+Manish Kumar
+****************************/
+
+
+
+
+Problem Statement
+
+
+
+Roy is building a Fibonacci number calculator for a programming competition. The competition requires participants to write a program that generates the first 'n' Fibonacci numbers and prints the sequence.
+
+
+
+Participants are not allowed to use any pre-calculated Fibonacci numbers or predefined functions for Fibonacci calculations. His task is to implement the Fibonacci number calculator. Write a program using dynamic memory allocation to accomplish this task.
+
+
+
+Note: This kind of question will help in clearing Deloitte recruitment.
+
+Input format :
+The input consists of a single integer, n.
+
+Output format :
+The output displays the first 'n' Fibonacci numbers separated by space.
+
+If n is less than 1, then the output displays the appropriate error message.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+1 <= n <= 30
+
+Sample test cases :
+Input 1 :
+5
+Output 1 :
+Fibonacci Sequence: 0 1 1 2 3 
+Input 2 :
+-2
+Output 2 :
+Number of Fibonacci numbers should be positive!
+
+
+
+#include <iostream>
+using namespace std;
+
+int* generateFibonacci(int n) {
+    int* fibArray = new int[n];
+    fibArray[0] = 0;
+    if (n == 1) return fibArray;
+
+    fibArray[1] = 1;
+    for (int i = 2; i < n; ++i) {
+        fibArray[i] = fibArray[i - 1] + fibArray[i - 2];
+    }
+    return fibArray;
+}
+
+void printFibonacci(const int* fibArray, int n) {
+    cout << "Fibonacci Sequence: ";
+    for (int i = 0; i < n; ++i) {
+        cout << fibArray[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    if (n <= 0) {
+        cout << "Number of Fibonacci numbers should be positive!";
+        return 0;
+    }
+    int* fibonacciArray = generateFibonacci(n);
+    printFibonacci(fibonacciArray, n);
+
+    // Don't forget to free the dynamically allocated memory
+    delete[] fibonacciArray;
+    
+
+    return 0;
+}
+
+
+
+Problem Statement
+
+
+
+Nikil is developing a text editor for a specialized system that requires dynamic string handling. The text editor should allow users to input characters and dynamically resize the memory to store the text. Write a program to accomplish this task.
+
+
+
+Note: This kind of question will help in clearing mPhasis recruitment.
+
+Input format :
+The input accepts characters one by one from the user. To stop appending characters, type '0'.
+
+Output format :
+The output displays the complete string and its length.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+The input string will not exceed 1000 characters.
+
+Sample test cases :
+Input 1 :
+Hello, this is a dynamic string handling example0
+Output 1 :
+Dynamic String: Hello, this is a dynamic string handling example
+String Length: 48
+Input 2 :
+The quick brown fox jumps over the lazy dog0
+Output 2 :
+Dynamic String: The quick brown fox jumps over the lazy dog
+String Length: 43
+
+
+
+#include <iostream>
+#include <cstring>
+
+class DynamicString {
+private:
+    char* str;
+    size_t size;
+    size_t capacity;
+
+public:
+    // Constructor
+    DynamicString() : str(nullptr), size(0), capacity(0) {}
+
+    // Destructor
+    ~DynamicString() {
+        delete[] str;
+    }
+
+    // Function to append a character to the string
+    void append(char ch) {
+        if (size == capacity) {
+            // Double the capacity if the current capacity is not sufficient
+            capacity = (capacity == 0) ? 1 : capacity * 2;
+            char* newStr = new char[capacity];
+
+            if (str) {
+                std::memcpy(newStr, str, size);
+                delete[] str;
+            }
+
+            str = newStr;
+        }
+
+        // Append the character and increase the size
+        str[size] = ch;
+        size++;
+    }
+
+    // Function to get the current string
+    const char* get() const {
+        return str;
+    }
+
+    // Function to get the current size of the string
+    size_t length() const {
+        return size;
+    }
+};
+
+int main() {
+    DynamicString dynStr;
+    char ch;
+    while (std::cin.get(ch) && ch != '0') {
+        dynStr.append(ch);
+    }
+
+    std::cout << "Dynamic String: " << dynStr.get() << std::endl;
+    std::cout << "String Length: " << dynStr.length() << std::endl;
+
+    return 0;
+}
+
+
+
+
+Problem Statement
+
+
+
+Suji is developing a program for a data analysis tool that requires reversing an array of integers and displaying both the original and reversed arrays.
+
+
+
+The program should dynamically allocate memory for the reversed array using the new operator. Write a program to accomplish this task.
+
+
+
+Note: This kind of question will help in clearing Capgemini recruitment.
+
+Input format :
+The first line of the input represents the size of the array.
+
+The second line represents the array elements, separated by a space
+
+Output format :
+The first line of the output displays the original array elements, separated by space.
+
+The second line displays the reversed array elements, separated by space.
+
+If n is less than 0, then the output displays the appropriate error message.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+1 <= size <= 100
+
+Sample test cases :
+Input 1 :
+5
+1 2 3 4 5
+Output 1 :
+Original Array: 1 2 3 4 5 
+Reversed Array: 5 4 3 2 1 
+Input 2 :
+-4
+Output 2 :
+Size of the array should be positive!
+
+
+
+#include <iostream>
+using namespace std;
+
+int* reverseArray(const int* arr, int size) {
+    int* reversedArr = new int[size];
+
+    for (int i = 0; i < size; ++i) {
+        reversedArr[i] = arr[size - 1 - i];
+    }
+
+    return reversedArr;
+}
+
+void printArray(const int* arr, int size) {
+    for (int i = 0; i < size; ++i) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int size;
+    cin >> size;
+
+    if (size <= 0) {
+        cout << "Size of the array should be positive!";
+        return 0;
+    }
+
+    int* originalArr = new int[size];
+
+    for (int i = 0; i < size; ++i) {
+        cin >> originalArr[i];
+    }
+
+    int* reversedArr = reverseArray(originalArr, size);
+
+    cout << "Original Array: ";
+    printArray(originalArr, size);
+
+    cout << "Reversed Array: ";
+    printArray(reversedArr, size);
+
+    // Don't forget to free the dynamically allocated memory
+    delete[] originalArr;
+    delete[] reversedArr;
+
+    return 0;
+}
+
+
+
+
+Ajay is developing a program for a data analysis tool that requires processing a list of N integers provided by the user.
+
+
+
+His program should dynamically allocate memory for three dynamic arrays using the new operator: one for storing the user-input integers, one for storing odd numbers from the list, and the other for storing even numbers from the list. The program should then display separate lists of odd and even integers. Write a program to accomplish this task.
+
+
+
+Note: This kind of question will help in clearing Cocubes recruitment.
+
+Input format :
+The first line of the input represents the size of the array.
+
+The second line represents the array elements, separated by a space
+
+Output format :
+The first line of the output displays the even integers, separated by space.
+
+The second line displays the odd integers, separated by space.
+
+If n is less than 0, then the output displays the appropriate error message.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+1 <= size <= 100
+
+Sample test cases :
+Input 1 :
+6
+1 2 3 4 5 6
+Output 1 :
+List of Odd Integers: 1 3 5 
+List of Even Integers: 2 4 6 
+Input 2 :
+-4
+Output 2 :
+Number of integers should be positive!
+
+
+#include <iostream>
+using namespace std;
+int main() {
+    int N;
+    cin >> N;
+    if (N <= 0) {
+        cout << "Number of integers should be positive!";
+        return 0;
+    }
+    int* inputArray = new int[N];
+    int* oddArray = new int[N];
+    int* evenArray = new int[N];
+    int oddCount = 0;
+    int evenCount = 0;
+    for (int i = 0; i < N; ++i) {
+        cin >> inputArray[i];
+        if (inputArray[i] % 2 == 0) {
+            evenArray[evenCount] = inputArray[i];
+            evenCount++;
+        } else {
+            oddArray[oddCount] = inputArray[i];
+            oddCount++;
+        }
+    }
+    cout << "List of Odd Integers: ";
+    for (int i = 0; i < oddCount; ++i) {
+        cout << oddArray[i] << " ";
+    }
+    cout << endl;
+    std::cout << "List of Even Integers: ";
+    for (int i = 0; i < evenCount; ++i) {
+        std::cout << evenArray[i] << " ";
+    }
+    // Don't forget to free the dynamically allocated memory
+    delete[] inputArray;
+    delete[] oddArray;
+    delete[] evenArray;
+    return 0;
+}
+
+
+
+Problem Statement
+
+
+
+Nila is tasked with developing a program to determine if a given string is a palindrome and display its reversed version. A palindrome is a word, phrase, number, or other sequence of characters that reads the same forward and backward (ignoring spaces, punctuation, and capitalization).
+
+
+
+The program should finally display the result, indicate whether the input string is a palindrome, and print the reversed version of the input string.
+
+
+
+Your task is to implement the isPalindrome and reverseString functions as provided in the given code and design the main function to fulfill the requirements of the palindrome-checking program. Properly manage memory allocation and deallocation to avoid memory leaks and ensure that the program handles strings of various lengths correctly.
+
+Input format :
+The input consists of a string.
+
+Output format :
+The output displays whether the input string is a palindrome or not.
+
+If the input string is a palindrome, the program should display the message: "The input string is a palindrome."
+
+If the input string is not a palindrome, the program should display the message: "The input string is not a palindrome."
+
+The program should also display the reversed version of the input string on a separate line, preceded by the message: "Reversed string: "
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+The input string should be up to 100 characters long, including spaces and other special characters.
+
+The input string may contain uppercase and lowercase letters, spaces, punctuation, and numbers.
+
+Sample test cases :
+Input 1 :
+radar
+Output 1 :
+The input string is a palindrome.
+Reversed string: radar
+Input 2 :
+12321
+Output 2 :
+The input string is a palindrome.
+Reversed string: 12321
+Input 3 :
+Testing 1 2 3 testing
+Output 3 :
+The input string is not a palindrome.
+Reversed string: gnitset 3 2 1 gnitseT
+
+
+
+#include <iostream>
+#include <cstring>
+
+bool isPalindrome(const char* str) {
+    int len = strlen(str);
+    for (int i = 0; i < len / 2; i++) {
+        if (str[i] != str[len - 1 - i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+char* reverseString(const char* str) {
+    int len = strlen(str);
+    char* reversedStr = new char[len + 1];
+    for (int i = 0; i < len; i++) {
+        reversedStr[i] = str[len - 1 - i];
+    }
+    reversedStr[len] = '\0';
+    return reversedStr;
+}
+
+int main() {
+    const int MAX_LENGTH = 100;
+
+    char input[MAX_LENGTH];
+
+    // Get user input for the string
+    std::cin.getline(input, MAX_LENGTH);
+
+    // Dynamically allocate memory for the reversed version of the string
+    char* reversedStr = reverseString(input);
+
+    // Check if the original string is a palindrome
+    if (isPalindrome(input)) {
+        std::cout << "The input string is a palindrome." << std::endl;
+    } else {
+        std::cout << "The input string is not a palindrome." << std::endl;
+    }
+
+    // Print the reversed string
+    std::cout << "Reversed string: " << reversedStr;
+
+    // Deallocate memory for the reversed string
+    delete[] reversedStr;
+
+    return 0;
+}
+
+
+
+
+Problem Statement
+
+
+
+Mithun is developing a program for a data collection tool that allows the user to input a series of positive integers until they enter a negative value. 
+
+
+
+The program should dynamically allocate memory for an integer array to store these numbers using the new operator. The program should then calculate and display the sum and average of the entered integers. Write a program to accomplish this task.
+
+
+
+Note: This kind of question will help in clearing HCL recruitment.
+
+Input format :
+The input consists of positive integers separated by a space. It continues until a negative value is entered.
+
+
+
+Output format :
+The first line of the output displays the entered numbers.
+
+The second line displays the sum of the numbers.
+
+The third line displays the average of the entered numbers.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+numbers > 0
+
+Maximum number <=100
+
+Sample test cases :
+Input 1 :
+1 2 3 4 5 6 -1
+Output 1 :
+Numbers entered: 1 2 3 4 5 6 
+Sum of entered numbers: 21
+Average of entered numbers: 3.50
+Input 2 :
+10 20 30 40 50 60 70 80 90 100 -4
+Output 2 :
+Numbers entered: 10 20 30 40 50 60 70 80 90 100 
+Sum of entered numbers: 550
+Average of entered numbers: 55.00
+
+
+
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    int* numbers = nullptr;
+    int numCount = 0;
+    int input;
+    int sum = 0;
+
+
+    while (true) {
+        cin >> input;
+
+        if (input < 0) {
+            break;
+        }
+
+        // Dynamically allocate memory for the numbers array and store the input value
+        int* tempNumbers = new int[numCount + 1];
+        for (int i = 0; i < numCount; ++i) {
+            tempNumbers[i] = numbers[i];
+        }
+        tempNumbers[numCount] = input;
+
+        delete[] numbers; // Deallocate the previous numbers array
+        numbers = tempNumbers;
+        numCount++;
+
+        sum += input;
+    }
+
+    double average = (numCount > 0) ? static_cast<double>(sum) / numCount : 0.0;
+
+    cout << "Numbers entered: ";
+    for (int i = 0; i < numCount; ++i) {
+        std::cout << numbers[i] << " ";
+    }
+    std::cout << std::endl;
+
+    std::cout << "Sum of entered numbers: " << sum << std::endl;
+    std::cout << std::fixed << std::setprecision(2);
+    std::cout << "Average of entered numbers: " << average << std::endl;
+
+    // Don't forget to free the dynamically allocated memory
+    delete[] numbers;
+
+    return 0;
+}
+
+
+
+
+Prabha is tasked with developing a simple password manager program that allows users to store and retrieve their usernames and passwords securely. The program should encrypt the passwords before storing them and decrypt them when displaying them for the user. Users can add new accounts with usernames and passwords, and retrieve passwords by providing the corresponding username.
+
+
+
+Your task is to implement encryptPassword, decryptPassword, and the main function as provided in the given code to fulfill the requirements of the password manager program. The program should use a Caesar cipher encryption technique to encrypt the passwords with a fixed shift value (ENCRYPTION_SHIFT) and store the encrypted passwords in memory. When a user requests the password for a specific username, the program should decrypt the password and display it to the user.
+
+
+
+The program should display a simple menu to the user with the following options:
+
+Add a user (1): This allows the user to add a new username and password.
+
+Show the password for a user (2): Allows the user to retrieve the password for a specific username.
+
+Exit (3): Allows the user to exit the program.
+
+
+
+The program should use dynamic arrays to store usernames and encrypted passwords, and it should handle up to 10 users (MAX_USERS). If the user attempts to add more than 10 users, the program should display an appropriate message indicating that no more users can be added.
+
+
+
+Ensure that the program handles user inputs correctly, performs encryption and decryption accurately, and properly manages dynamic memory allocation and deallocation to avoid memory leaks.
+
+Input format :
+The input has the following format:
+
+
+
+The user is prompted to enter integers corresponding to the menu options (1, 2, or 3).
+
+For option 1 (Add a user), the user should enter a username and a password, each on a separate line.
+
+For option 2 (Show password for a user), the user should enter the username for which they want to retrieve the password.
+
+For option 3 (Exit), no additional input is required.
+
+Output format :
+The output has the following format:
+
+
+
+When the user successfully adds a user (chooses option 1), the program will not provide any output, except for the prompt for the next menu choice.
+
+When the user requests a password (chooses option 2), the program will display the password for the corresponding username or indicate that the user was not found.
+
+If the user inputs an invalid choice or incorrect username, the program will display an error message.
+
+If the maximum limit is reached, the program will display a warning message.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+The encryption shift value (ENCRYPTION_SHIFT) is a fixed integer (constant) defined in the code and can be any positive or negative integer value.
+
+The program assumes that usernames and passwords entered by the user will contain alphanumeric characters and may include spaces or other special characters.
+
+The program uses dynamic arrays to store usernames and encrypted passwords. It can handle up to 10 users (MAX_USERS) due to the predefined array size.
+
+The program will print appropriate messages when users try to add more than 10 users.
+
+Sample test cases :
+Input 1 :
+1
+JohnDoe
+P@ssw0rd
+2
+JohnDoe
+4
+3
+Output 1 :
+Password for user 'JohnDoe' is: P@ssw0rd
+Invalid choice. Please try again.
+Input 2 :
+1
+Alice
+MySecret
+1
+Bob
+MyPassword
+2
+Alice
+2
+Bob
+2
+John
+3
+Output 2 :
+Password for user 'Alice' is: MySecret
+Password for user 'Bob' is: MyPassword
+User not found.
+Input 3 :
+1
+User1
+Password1
+1
+User2
+Password2
+1
+User3
+Password3
+1
+User4
+Password4
+1
+User5
+Password5
+1
+User6
+Password6
+1
+User7
+Password7
+1
+User8
+Password8
+1
+User9
+Password9
+1
+User10
+Password10
+2
+User10
+2
+User8
+1
+User11
+Password11
+3
+Output 3 :
+Password for user 'User10' is: Password10
+Password for user 'User8' is: Password8
+Maximum number of users reached.
+
+
+#include <iostream>
+#include <cstring> // For string manipulation
+
+// Function to encrypt the password
+std::string encryptPassword(const std::string& password, int shift) {
+    std::string encryptedPassword = password;
+    for (char& c : encryptedPassword) {
+        c = static_cast<char>(c + shift);
+    }
+    return encryptedPassword;
+}
+
+// Function to decrypt the password
+std::string decryptPassword(const std::string& encryptedPassword, int shift) {
+    std::string password = encryptedPassword;
+    for (char& c : password) {
+        c = static_cast<char>(c - shift);
+    }
+    return password;
+}
+
+int main() {
+    const int ENCRYPTION_SHIFT = 3;
+    const int MAX_USERS = 10; // Add the missing constant
+
+    std::string* usernames = new std::string[MAX_USERS];
+    std::string* encryptedPasswords = new std::string[MAX_USERS];
+    int numUsers = 0;
+
+    while (true) {
+        /*std::cout << "Menu:" << std::endl;
+        std::cout << "1. Add a user" << std::endl;
+        std::cout << "2. Show password for a user" << std::endl;
+        std::cout << "3. Exit" << std::endl;*/
+      
+        int choice;
+        std::cin >> choice;
+        
+        if (choice == 1) {
+            if (numUsers >= MAX_USERS) {
+                std::cout << "Maximum number of users reached." << std::endl;
+                return 0;
+            }
+        }
+
+        if (choice == 1) {
+            std::string username, password;
+            std::cin >> username;
+            std::cin >> password;
+
+            // Encrypt the password before storing it
+            std::string encryptedPassword = encryptPassword(password, ENCRYPTION_SHIFT);
+
+            // Store the username and encrypted password in the dynamic arrays
+            usernames[numUsers] = username;
+            encryptedPasswords[numUsers] = encryptedPassword;
+
+            numUsers++;
+
+
+        } else if (choice == 2) {
+            std::string username, password;
+            std::cin >> username;
+
+            // Find the user in the array
+            bool userFound = false;
+            for (int i = 0; i < numUsers; i++) {
+                if (usernames[i] == username) {
+                    // Decrypt the password before displaying it
+                    password = decryptPassword(encryptedPasswords[i], ENCRYPTION_SHIFT);
+                    std::cout << "Password for user '" << username << "' is: " << password << std::endl;
+                    userFound = true;
+                    break;
+                }
+            }
+
+            if (!userFound) {
+                std::cout << "User not found." << std::endl;
+            }
+
+        } else if (choice == 3) {
+            break;
+        } else {
+            std::cout << "Invalid choice. Please try again." << std::endl;
+        }
+    }
+
+    // Deallocate memory for the dynamic arrays
+    delete[] usernames;
+    delete[] encryptedPasswords;
+
+    return 0;
+}
+
+
+
+Dancy is developing a program for a number crunching tool that requires finding all pairs of elements whose sum is equal to a target sum. The program should take the following inputs from the user: the size of the array, the elements of the array, and the target sum.
+
+
+
+The program should then dynamically allocate memory to store the array of integers using the new operator. Your task is to implement a function to find all pairs of elements whose sum is equal to the target sum.
+
+
+
+Note: This kind of question will help in clearing Amcat recruitment.
+
+Input format :
+The first line represents the size of the array.
+
+The second line represents the elements of an array separated by a space.
+
+The third line represents the target sum.
+
+Output format :
+The output displays the pairs whose sum is equal to the target sum.
+
+Each pair should be printed in the format: "Pair found: (element 1, element 2)".
+
+If there is no pair, then the output displays "No pair".
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+1 <= size <= 100
+
+Sample test cases :
+Input 1 :
+10
+1 2 3 4 5 6 7 8 9 10
+10
+Output 1 :
+Pairs with the sum 10 are:
+Pair found: (6, 4)
+Pair found: (7, 3)
+Pair found: (8, 2)
+Pair found: (9, 1)
+Input 2 :
+-2
+Output 2 :
+Size of the array should be positive!
+Input 3 :
+10
+1 2 3 4 5 6 7 8 9 10
+100
+Output 3 :
+Pairs with the sum 100 are:
+No pair
+
+
+
+// You are using GCC
+#include <iostream>
+#include <unordered_set>
+using namespace std;
+
+void findPairsWithSum(int* arr, int size, int targetSum) {
+    unordered_set<int> seenElements;
+    bool foundPair = false;
+
+    for (int i = 0; i < size; ++i) {
+        int complement = targetSum - arr[i];
+        if (seenElements.find(complement) != seenElements.end()) {
+            cout << "Pair found: (" << arr[i] << ", " << complement << ")" << endl;
+            foundPair = true;
+        }
+        seenElements.insert(arr[i]);
+    }
+
+    if (!foundPair) {
+        cout << "No pair" << endl;
+    }
+}
+
+int main() {
+    int size;
+    cin >> size;
+
+    if (size <= 0) {
+        cout << "Size of the array should be positive!";
+        return 0;
+    }
+
+    int* arr = new int[size];
+    for (int i = 0; i < size; ++i) {
+        cin >> arr[i];
+    }
+
+    int targetSum;
+    cin >> targetSum;
+    cout << "Pairs with the sum " << targetSum << " are:" << endl;
+    findPairsWithSum(arr, size, targetSum);
+    delete[] arr;
+    return 0;
+}
+
+
+
+
+Problem Statement
+
+
+
+Sheela is tasked with developing a program that takes a list of integers as input and categorizes them into two groups: prime numbers and non-prime numbers. The program should determine whether each integer in the list is a prime number or not and then display the prime and non-prime numbers separately.
+
+
+
+Your task is to implement the isPrime function and the main function as provided in the given code to fulfill the requirements of the number classification program. The program should prompt the user to enter the number of integers (N) and then N integers. After processing the input, the program should display the prime and non-prime numbers in separate groups.
+
+
+
+The program should use dynamic arrays to store prime and non-prime numbers separately to accommodate different input sizes. It should handle positive integers as well as zero.
+
+
+
+Ensure that the program handles user inputs correctly, identifies prime numbers accurately, and properly manages dynamic memory allocation and deallocation to avoid memory leaks.
+
+Input format :
+The first line of input contains an integer N, representing the number of integers they want to classify.
+
+The next line of input contains N integers, each separated by spaces.
+
+Output format :
+The output displays the prime and non-prime numbers in separate groups.
+
+The prime numbers are displayed first, followed by the non-prime numbers.
+
+The prime and non-prime numbers are separated by spaces.
+
+If there are no prime numbers in the array, it displays appropriate message.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+1 <= n <= 100
+
+Sample test cases :
+Input 1 :
+7
+12 15 19 23 32 41 47
+Output 1 :
+Prime numbers: 19 23 41 47 
+Non-prime numbers: 12 15 32 
+Input 2 :
+8
+1 4 6 8 9 10 12 15
+Output 2 :
+No prime numbers found.
+Non-prime numbers: 1 4 6 8 9 10 12 15 
+Input 3 :
+12
+-97 -89 -83 -79 -73 -71 -67 -61 -59 -53 -47 -43
+Output 3 :
+No prime numbers found.
+Non-prime numbers: -97 -89 -83 -79 -73 -71 -67 -61 -59 -53 -47 -43 
+
+
+
+#include <iostream>
+#include <cmath>
+
+bool isPrime(int num) {
+    if (num <= 1) return false;
+    if (num == 2 || num == 3) return true;
+    if (num % 2 == 0) return false;
+
+    for (int i = 3; i <= std::sqrt(num); i += 2) {
+        if (num % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+int main() {
+    int N;
+    std::cin >> N;
+
+    int* numbers = new int[N];
+    int* primes = new int[N];
+    int* nonPrimes = new int[N];
+    int primeCount = 0;
+    int nonPrimeCount = 0;
+
+    for (int i = 0; i < N; i++) {
+        std::cin >> numbers[i];
+        if (isPrime(numbers[i])) {
+            primes[primeCount] = numbers[i];
+            primeCount++;
+        } else {
+            nonPrimes[nonPrimeCount] = numbers[i];
+            nonPrimeCount++;
+        }
+    }
+
+    // Display the prime numbers
+    if (primeCount > 0) {
+        std::cout << "Prime numbers: ";
+        for (int i = 0; i < primeCount; i++) {
+            std::cout << primes[i] << " ";
+        }
+        std::cout << std::endl;
+    } else {
+        std::cout << "No prime numbers found." << std::endl;
+    }
+
+    // Display the non-prime numbers
+    if (nonPrimeCount > 0) {
+        std::cout << "Non-prime numbers: ";
+        for (int i = 0; i < nonPrimeCount; i++) {
+            std::cout << nonPrimes[i] << " ";
+        }
+        std::cout << std::endl;
+    } else {
+        std::cout << "No non-prime numbers found.";
+    }
+
+    // Deallocate memory for the arrays
+    delete[] numbers;
+    delete[] primes;
+    delete[] nonPrimes;
+
+    return 0;
+}
+
+
+
+Problem Statement
+
+
+
+In a school, the teacher wants to maintain a sorted list of student names in alphabetical order. The teacher needs your help to write a program that takes the number of students and their names as input and then sorts the names in ascending order.
+
+
+
+Your task is to write code to implement the student registration system using dynamic memory allocation with new and delete for handling the student names.
+
+Input format :
+The first line of input contains a single integer, N, representing the number of names.
+
+The following N lines contain the names of the students, each on a separate line.
+
+Output format :
+The output consists of a single line containing the sorted list of student names, separated by a space.
+
+
+
+Refer to the sample output for the formatting specifications.
+
+Code constraints :
+1 <= number of names <= 1000 (the number of student names to be registered).
+
+1 <= length of each student name <= 100 (each name contains at most 100 characters).
+
+Sample test cases :
+Input 1 :
+5
+Sharma
+Dev
+Ankit
+Samir
+Robert
+Output 1 :
+Ankit Dev Robert Samir Sharma 
+
+
+#include <iostream>
+#include <string>
+
+int main()
+{
+    std::string* ptr;
+    std::string name;
+    int nof_names;
+    
+    std::cin >> nof_names;
+
+    ptr = new std::string[nof_names];
+
+    for (int m = 0; m < nof_names; m++)
+    {
+        std::cin >> ptr[m];
+    }
+
+    for (int m = 0; m < nof_names - 1; m++)
+    {
+        for (int n = m + 1; n < nof_names; n++)
+        {
+            if (ptr[m] > ptr[n])
+            {
+                name = ptr[m];
+                ptr[m] = ptr[n];
+                ptr[n] = name;
+            }
+        }
+    }
+
+    for (int m = 0; m < nof_names; m++)
+    {
+        std::cout << ptr[m] << " ";
+    }
+    
+    delete[] ptr;
+    return 0;
+}
+
+
+
+Problem Statement
+
+
+
+You are developing a currency converter application for an international finance company. The application is designed to convert an amount of money from USD (United States Dollar) to the desired target currency using a specific exchange rate. The application uses dynamic memory allocation with the new and delete operators to handle exchange rates.
+
+
+
+Note: This kind of question will help in clearing Infosys recruitment.
+
+Input format :
+The first line contains the exchange rate.
+
+The second line contains the amount in USD.
+
+Output format :
+The output displays the converted amount.
+
+Code constraints :
+0 < exchange rate < 1000
+
+0 < amount < 1000000
+
+Sample test cases :
+Input 1 :
+85
+1000
+Output 1 :
+85000.00
+Input 2 :
+43.8
+2506
+Output 2 :
+
+
+// You are using GCC
+
+#include <iostream>
+
+#include <iomanip> // Include the <iomanip> header for std::fixed and std::setprecision
+
+
+
+
+class CurrencyConverter {
+
+private:
+
+double* exchangeRate;
+
+public:
+
+CurrencyConverter() {
+
+exchangeRate = new double;
+
+}
+
+
+
+
+~CurrencyConverter() {
+
+delete exchangeRate;
+
+}
+
+
+
+
+void setExchangeRate(double rate) {
+
+*exchangeRate = rate;
+
+}
+
+
+
+
+double convertCurrency(double amount) {
+
+return amount * (*exchangeRate);
+
+}
+
+};
+
+
+
+
+int main() {
+
+CurrencyConverter converter;
+
+
+
+
+double exchangeRate;
+
+
+
+
+std::cin >> exchangeRate;
+
+
+
+
+converter.setExchangeRate(exchangeRate);
+
+
+
+
+double amountUSD;
+
+
+
+
+std::cin >> amountUSD;
+
+
+
+
+double convertedAmount = converter.convertCurrency(amountUSD);
+
+
+
+
+// Use std::fixed and std::setprecision(2) to display two digits after the decimal point
+
+std::cout << std::fixed << std::setprecision(2);
+
+std::cout << convertedAmount;
+
+
+
+
+return 0;
+
+} 
+
+
+Problem Statement
+
+
+
+Raju is developing a program for a language translation app. Users can input a sentence in English, and your program will dynamically allocate memory to create a reversed version of the sentence in English. The reversed sentence will be displayed as the translation for the user.
+
+
+
+Write a program that takes a string as input and dynamically allocates memory to create a reversed version of the string. The program should implement a function called reverseString that accepts the input string, dynamically allocates memory for the reversed string, and returns a pointer to the reversed string. Finally, print the reversed version of that given sentence.
+
+
+
+Note: This kind of question will help in clearing Amcat recruitment.
+
+Input format :
+The input contains a single line of text containing a sentence in English. The sentence can contain alphanumeric characters, punctuation, and spaces.
+
+Output format :
+The output displays the reversed version of the sentence in English.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+The length of the input sentence will not exceed 1000 characters.
+
+The sentence can contain any printable ASCII characters, including spaces, punctuation, and digits.
+
+The dynamic memory allocation should be used to create the reversed string.
+
+Sample test cases :
+Input 1 :
+Hello 9876543210, how are you today ?
+Output 1 :
+Reversed string: ? yadot uoy era woh ,0123456789 olleH
+Input 2 :
+A man, a plan, a canal, Panama! Was it a car or a cat I saw? Madam, in Eden, I'm Adam!
+Output 2 :
+Reversed string: !madA m'I ,nedE ni ,madaM ?was I tac a ro rac a ti saW !amanaP ,lanac a ,nalp a ,nam A
+Whitelist
+
+
+// You are using GCC
+
+#include <iostream>
+
+#include <cstring>
+
+
+
+
+int main() {
+
+
+
+
+std::string input;
+
+std::getline(std::cin, input);
+
+
+
+
+char* reversedString = new char[input.length() + 1];
+
+
+
+
+int i, j;
+
+for (i = 0, j = input.length() - 1; i < input.length(); ++i, --j) {
+
+reversedString[i] = input[j];
+
+}
+
+reversedString[i] = '\0'; // Add null-terminator to mark the end of the string
+
+
+
+
+std::cout << "Reversed string: " << reversedString << std::endl;
+
+
+
+
+// Remember to free the dynamically allocated memory
+
+delete[] reversedString;
+
+
+
+
+return 0;
+
+} 
+
+Jacob is a software developer working on a project that involves solving and analyzing various types of mathematical equations. His team decides to use a class called QuadraticEquation to handle quadratic equations.
+
+
+
+As part of the implementation, he has written a function solveAndDisplayRoots() that calculates and displays the roots of the quadratic equation.
+
+
+
+The code seems to work correctly, but his team lead asks him to add a feature to allow users to choose whether they want the roots in the standard form or the complex form (e.g., "1 + 2i" and "1 - 2i").
+
+
+
+He needs to implement this feature while ensuring that the code maintains its functionality for both real and complex roots. Write a program that accomplishes this task.
+
+Input format :
+The input consists of three floating-point numbers separated by spaces (a, b, and c), representing the coefficients of the quadratic equation.
+
+Output format :
+The program should display the roots of the quadratic equation in the following format:
+
+
+
+If the roots are real and distinct:
+
+"Root 1: <root1>"
+
+"Root 2: <root2>"
+
+
+
+If the roots are real and equal:
+
+"Root: <root>"
+
+
+
+If the roots are complex:
+
+"Root 1: <realPart> + <imaginaryPart>i"
+
+"Root 2: <realPart> - <imaginaryPart>i"
+
+Code constraints :
+The coefficients (a, b, and c) of the quadratic equation will be real numbers.
+
+Sample test cases :
+Input 1 :
+1 -3 2
+Output 1 :
+Root 1: 2
+Root 2: 1
+Input 2 :
+2 -4 2
+Output 2 :
+Root: 1
+Input 3 :
+1 2 5
+Output 3 :
+Root 1: -1 + 2i
+Root 2: -1 - 2i
+
+
+
+
+// You are using GCC
+
+#include <iostream>
+
+#include <cmath>
+
+
+
+
+class QuadraticEquation {
+
+private:
+
+double a, b, c;
+
+
+
+
+public:
+
+QuadraticEquation() : a(0.0), b(0.0), c(0.0) {}
+
+
+
+
+void setCoefficients(double a, double b, double c) {
+
+this->a = a;
+
+this->b = b;
+
+this->c = c;
+
+}
+
+
+
+
+void solveAndDisplayRoots() {
+
+double discriminant = b * b - 4 * a * c;
+
+if (discriminant > 0) {
+
+double root1 = (-b + sqrt(discriminant)) / (2 * a);
+
+double root2 = (-b - sqrt(discriminant)) / (2 * a);
+
+std::cout << "Root 1: " << root1 << std::endl;
+
+std::cout << "Root 2: " << root2 << std::endl;
+
+} else if (discriminant == 0) {
+
+double root = -b / (2 * a);
+
+std::cout << "Root: " << root << std::endl;
+
+} else {
+
+double realPart = -b / (2 * a);
+
+double imaginaryPart = sqrt(-discriminant) / (2 * a);
+
+std::cout << "Root 1: " << realPart << " + " << imaginaryPart << "i" << std::endl;
+
+std::cout << "Root 2: " << realPart << " - " << imaginaryPart << "i" << std::endl;
+
+}
+
+}
+
+};
+
+
+
+
+int main() {
+
+QuadraticEquation* equation = new QuadraticEquation();
+
+
+
+
+// Set the coefficients for the quadratic equation
+
+double a, b, c;
+
+std::cin >> a >> b >> c;
+
+equation->setCoefficients(a, b, c);
+
+
+
+
+// Solve and display the roots
+
+equation->solveAndDisplayRoots();
+
+
+
+
+// Deallocate memory
+
+delete equation;
+
+
+
+
+return 0;
+
+} 
+
+
+
+
+Problem Statement
+
+
+
+Robin is working on a program that helps students in a mathematics class. He is tasked to write a program to calculate and store the first 'n' terms of an arithmetic progression, given the initial term and the common difference. The program should dynamically allocate memory for an array to store these terms and then compute and display the sum of the arithmetic progression. Help the students by writing a program that takes the necessary inputs and provides the expected output.
+
+Input format :
+The input contains three integers.
+
+An integer 'n', representing the number of terms in the arithmetic progression.
+
+An integer 'initialTerm', representing the first term of the arithmetic progression.
+
+An integer 'commonDifference', representing the common difference between consecutive terms.
+
+Output format :
+The output displays the sum of the arithmetic progression.
+
+Code constraints :
+1 <= n <= 1000
+
+-10^9 <= initialTerm <= 10^9 (
+
+-10^9 <= commonDifference <= 10^9
+
+Sample test cases :
+Input 1 :
+5 2 3
+Output 1 :
+40
+Input 2 :
+7 -2 4
+Output 2 :
+70
+
+
+// You are using GCC
+
+#include <iostream>
+
+
+
+
+int main() {
+
+int n;
+
+std::cin >> n;
+
+
+
+
+int initialTerm, commonDifference;
+
+std::cin >> initialTerm;
+
+std::cin >> commonDifference;
+
+
+
+
+// Dynamically allocate memory for the array
+
+int* arr = new int[n];
+
+
+
+
+// Calculate and store the first n terms in the array
+
+arr[0] = initialTerm;
+
+for (int i = 1; i < n; i++) {
+
+arr[i] = arr[i - 1] + commonDifference;
+
+}
+
+
+
+
+// Calculate the sum of the arithmetic progression
+
+int sum = 0;
+
+for (int i = 0; i < n; i++) {
+
+sum += arr[i];
+
+}
+
+
+
+
+// Print the sum
+
+std::cout << sum;
+
+
+
+
+// Deallocate the dynamically allocated memory
+
+delete[] arr;
+
+
+
+
+return 0;
+
+} 
+
+
+
+Problem Statement
+
+
+
+You are developing a word processing application that requires sorting the characters of each word in a sentence. Users will input sentences, and your program needs to dynamically allocate memory for each word and sort its characters in ascending order based on their ASCII values. The sorted words should then be displayed as a new sentence.
+
+
+
+Your task is to implement the core functionality of this word processing feature. The program should take a sentence as input from the user and correctly sort the characters of each word. Ensure that your program efficiently handles dynamic memory allocation and avoids memory leaks.
+
+
+
+Note: This kind of question will help in clearing Cocubes recruitment.
+
+Input format :
+The input contains a sentence.
+
+Output format :
+The output displays the sorted words based on the ASCII values of their characters.
+
+Code constraints :
+The sentence will have at least one word and at most 100 words.
+
+Each word in the sentence will contain at least one character and at most 100 characters.
+
+The total number of characters in the sentence (including spaces) will not exceed 10000.
+
+Sample test cases :
+Input 1 :
+The quick brown fox jumps over the lazy dog
+Output 1 :
+Teh cikqu bnorw fox jmpsu eorv eht alyz dgo 
+Input 2 :
+I cannot believe it's already Friday; the week went by so quickly!
+Output 2 :
+I acnnot beeeilv 'ist aadelry ;Fadiry eht eekw entw by os !ciklquy 
+
+
+
+
+// You are using GCC
+
+#include <iostream>
+
+#include <cstring>
+
+#include <algorithm>
+
+using namespace std;
+
+
+
+
+// Function to sort characters of a word in ascending order based on ASCII values
+
+void sortWordCharacters(char* word) {
+
+int len = strlen(word);
+
+sort(word, word + len);
+
+}
+
+
+
+
+int main() {
+
+// Input sentence from the user
+
+string sentence;
+
+getline(cin, sentence);
+
+
+
+
+// Convert the sentence to a C-style string (character array)
+
+char* c_sentence = new char[sentence.length() + 1];
+
+strcpy(c_sentence, sentence.c_str());
+
+
+
+
+// Dynamically allocate memory for each word in the sentence
+
+char* word = strtok(c_sentence, " ");
+
+while (word != nullptr) {
+
+// Dynamically allocate memory for characters of the word
+
+char* sorted_word = new char[strlen(word) + 1];
+
+strcpy(sorted_word, word);
+
+
+
+
+// Sort the characters of the word
+
+sortWordCharacters(sorted_word);
+
+
+
+
+// Print the sorted word
+
+cout << sorted_word << " ";
+
+
+
+
+// Free dynamically allocated memory for the word
+
+delete[] sorted_word;
+
+
+
+
+// Move to the next word in the sentence
+
+word = strtok(nullptr, " ");
+
+}
+
+
+
+
+// Free dynamically allocated memory for the sentence
+
+delete[] c_sentence;
+
+
+
+
+return 0;
+
+} 
+
+
+

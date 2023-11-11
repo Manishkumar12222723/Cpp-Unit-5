@@ -1,0 +1,1531 @@
+/****************************
+Manish Kumar
+****************************/
+
+
+
+Problem Statement
+
+
+
+Mohan is working on a project to develop a set of number-related tools for a mathematics education platform. As part of this project, he needs to implement an Armstrong number checker using the concept of late binding. Armstrong numbers, also known as narcissistic numbers, are special numbers that satisfy a particular property. Write a program to accomplish this task.
+
+
+
+Implement an Armstrong number checker class, "ArmstrongChecker", with a pure virtual function "isArmstrong(int number)" to check if a given integer number is an Armstrong number. Additionally, implement a derived class "ArmstrongCheckerImpl", which inherits from the ArmstrongChecker base class. The derived class should override the isArmstrong method to calculate whether the given number is an Armstrong number or not, using the concept of late binding (dynamic binding).
+
+
+
+Note: This kind of question will help in clearing TCS recruitment.
+
+Input format :
+The input consists of an integer.
+
+Output format :
+The output displays whether the given number is an Armstrong number or not.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+1<=number<=1000
+
+Sample test cases :
+Input 1 :
+153
+Output 1 :
+153 is an Armstrong number.
+Input 2 :
+95
+Output 2 :
+95 is not an Armstrong number.
+
+
+// You are using GCC
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class ArmstrongChecker {
+public:
+    virtual bool isArmstrong(int number) const = 0;
+};
+
+class ArmstrongCheckerImpl : public ArmstrongChecker {
+public:
+    bool isArmstrong(int number) const override {
+        int num = number;
+        int numDigits = getNumberOfDigits(number);
+        int sum = 0;
+
+        while (num > 0) {
+            int digit = num % 10;
+            sum += pow(digit, numDigits);
+            num /= 10;
+        }
+
+        return sum == number;
+    }
+
+private:
+    int getNumberOfDigits(int number) const {
+        int count = 0;
+        while (number > 0) {
+            number /= 10;
+            count++;
+        }
+        return count;
+    }
+};
+
+int main() {
+    ArmstrongCheckerImpl armstrongChecker;
+    int number;
+    cin >> number;
+    if (armstrongChecker.isArmstrong(number)) {
+        cout << number << " is an Armstrong number." << endl;
+    } else {
+        cout << number << " is not an Armstrong number." << endl;
+    }
+
+    return 0;
+}
+
+
+
+Problem Statement
+
+
+
+You are working for a renowned software company that develops various utility applications. One of the applications requires a feature to convert decimal numbers to octal numbers. To achieve this functionality, you are provided with a template that includes a base class "BaseConverter" and a derived class "DecimalToOctalConverter".
+
+
+
+The "BaseConverter" class has a pure virtual function convert, which must be overridden in the "DecimalToOctalConverter" class. The convert function should take an integer representing a decimal number and return its octal equivalent. The company requires the use of late binding, also known as dynamic polymorphism, to enable runtime selection of the appropriate convert function based on the object's type.
+
+
+
+Your task is to implement the DecimalToOctalConverter class while adhering to late binding principles. Ensure that the conversion from a given decimal number to its octal representation is correct and that the code uses dynamic dispatch to handle different object types.
+
+
+
+Note: This kind of question will help in clearing Amcat recruitment.
+
+Input format :
+The input represents an integer.
+
+Output format :
+The output displays the octal number for the given number.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+-1000<=number<=1000
+
+Sample test cases :
+Input 1 :
+42
+Output 1 :
+52
+Input 2 :
+0
+Output 2 :
+0
+
+
+
+// You are using GCC
+#include <iostream>
+using namespace std;
+
+class BaseConverter {
+public:
+    virtual int convert(int number) const = 0;
+};
+
+class DecimalToOctalConverter : public BaseConverter {
+public:
+    int convert(int decimal) const override {
+        if (decimal == 0)
+            return 0;
+        else
+            return (decimal % 8) + 10 * convert(decimal / 8);
+    }
+};
+
+int main() {
+    int decimal;
+    cin >> decimal;
+
+    BaseConverter* converter = new DecimalToOctalConverter();
+    int octal = converter->convert(decimal);
+
+    cout << octal;
+
+    delete converter;
+
+    return 0;
+}
+
+
+Problem Statement
+
+
+
+Suppose we are designing a software application for a scientific research institute. The institute frequently deals with square matrices that represent various physical properties of materials and substances under study. As part of the application, we need to implement a module that checks whether a given square matrix is an identity matrix or not.
+
+
+
+An identity matrix is a square matrix in which all elements on the main diagonal (top-left to bottom-right diagonal) are 1, and all other elements are 0. The application should allow researchers to input the matrix dimensions and its elements either as double or int data types.
+
+
+
+To achieve this, you should implement two functions: readMatrix for reading matrix elements as double or int, and isIdentity to determine if the matrix is an identity matrix using early binding. Use function overloading to handle the different data types for reading matrix elements. Ensure that dynamically allocated memory for the matrix is properly deallocated after use to avoid memory leaks.
+
+Input format :
+The first line contains two space-separated integers, rows and cols, representing the dimensions of the square matrix.
+
+The next rows lines contain cols space-separated elements of the matrix.
+
+Output format :
+The output prints whether the given matrix is an identity matrix or not.
+
+
+
+Refer to the sample output for specifications.
+
+Code constraints :
+1 ≤ rows, cols ≤ 50
+
+Sample test cases :
+Input 1 :
+3 3
+1 0 0 
+0 1 0
+0 0 1
+Output 1 :
+Identity matrix
+Input 2 :
+3 3
+1 0 0 
+1 0 1
+0 1 0
+Output 2 :
+Not an identity matrix
+
+
+// You are using GCC
+#include <iostream>
+using namespace std;
+
+void readMatrix(double* matrix, int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cin >> matrix[i * cols + j];
+        }
+    }
+}
+
+void readMatrix(int* matrix, int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cin >> matrix[i * cols + j];
+        }
+    }
+}
+
+int isIdentity(double* matrix, int rows, int cols) {
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            if (i == j && matrix[i * cols + j] != 1.0) {
+                return 0;
+            }
+            if (i != j && matrix[i * cols + j] != 0.0) {
+                return 0;
+            }
+        }
+    }
+    return 1;
+}
+
+int main() {
+    int rows, cols;
+    cin >> rows >> cols;
+    double* matrix = new double[rows * cols];
+    readMatrix(matrix, rows, cols);
+    int isIden = isIdentity(matrix, rows, cols);
+    if (isIden) {
+        cout << "Identity matrix";
+    } else {
+        cout << "Not an identity matrix";
+    }
+    delete[] matrix;
+    return 0;
+}
+
+
+
+Problem statement
+
+
+
+Imagine you are developing a microcontroller-based system that needs to perform binary conversions of integers for various input devices. The system is designed to handle multiple input types, such as buttons, sensors, and serial communication. To achieve this, you decide to use early binding to ensure efficiency and reduce runtime overhead.
+
+
+
+Design a class called BinaryConverter to handle binary conversions for different input devices in the microcontroller-based system. The class should contain a function called intToBinary, which takes an integer as input and returns its binary representation as a string. Ensure that the binary string is always 32-bits long, with leading zeros if necessary.
+
+
+
+To facilitate early binding, declare the intToBinary function as a non-virtual function, as early binding resolves function calls at compile-time based on the object's declared data type.
+
+Input format :
+The input consists of an integer.
+
+Output format :
+The output displays the binary number for the given number.
+
+
+
+Refer to the sample output for specifications.
+
+Code constraints :
+-100<=number<=100
+
+Sample test cases :
+Input 1 :
+10
+Output 1 :
+Binary representation: 00000000000000000000000000001010
+Input 2 :
+-10
+Output 2 :
+Binary representation: 11111111111111111111111111110110
+
+
+// You are using GCC
+#include <iostream>
+#include <string>
+using namespace std;
+
+class BinaryConverter {
+public:
+    BinaryConverter(int num) : number(num) {}
+
+    string intToBinary() const {
+        string binary(32, '0');
+        int i = 31;
+
+        int temp = number;
+        while (i >= 0) {
+            binary[i] = (temp & 1) + '0';
+            temp >>= 1;
+            i--;
+        }
+
+        return binary;
+    }
+
+private:
+    int number;
+};
+
+int main() {
+    int num;
+    cin >> num;
+
+    BinaryConverter converter(num);
+    string binary = converter.intToBinary();
+    cout << "Binary representation: " << binary << endl;
+
+    return 0;
+}
+
+
+Problem Statement
+
+
+
+Hema is part of a software development team responsible for creating a financial application that helps users manage their personal finances. As part of this application, she is tasked with implementing a currency-to-words converter for Indian Rupees, but this time, she is required to use dynamic constructors to handle the conversion.
+
+
+
+Your task is to write a program that takes a positive integer as input, representing an amount in Indian Rupees, and converts it into words, following the Indian numbering system.
+
+Input format :
+The input is a single integer, representing the amount.
+
+Output format :
+The output displays the amount in words.
+
+If the amount is not within the range, the program should output "Invalid".
+
+
+
+Refer to the sample output for the formatting specification.
+
+Code constraints :
+1<= amount <=99999
+
+Sample test cases :
+Input 1 :
+12345
+Output 1 :
+Twelve Thousand Three Hundred Forty Five
+Input 2 :
+-40
+Output 2 :
+Invalid input
+
+
+// You are using GCC
+#include <iostream>
+#include <string>
+using namespace std;
+
+class NumberToWordsConverter {
+private:
+    int number;
+    string* words;
+    string ones[20] = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten",
+                            "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+
+    string tens[10] = {"", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+
+    string convertLessThanThousand(int num) {
+        string result;
+        if (num % 100 < 20) {
+            result = ones[num % 100];
+            num /= 100;
+        } else {
+            result = ones[num % 10];
+            num /= 10;
+            result = tens[num % 10] + " " + result;
+            num /= 10;
+        }
+        if (num > 0) {
+            result = ones[num] + " Hundred " + result;
+        }
+        return result;
+    }
+public:
+    NumberToWordsConverter(int num) : number(num) {
+        if (number == 0) {
+            words = new string("Zero");
+        } else {
+            words = new string(convertLessThanThousand(number % 1000));
+            number /= 1000;
+            if (number > 0) {
+                string thousandPart = convertLessThanThousand(number % 1000) + " Thousand ";
+                *words = thousandPart + *words;
+                number /= 1000;
+            }
+            if (number > 0) {
+                string millionPart = convertLessThanThousand(number % 1000) + " Million ";
+                *words = millionPart + *words;
+            }
+        }
+    }
+    ~NumberToWordsConverter() {
+        delete words;
+    }
+
+    void displayWords() {
+        cout << *words ;
+    }
+};
+
+int main() {
+    int num;
+    cin >> num;
+    if (num < 0) {
+        cout << "Invalid input";
+        return 0;
+    }
+    NumberToWordsConverter converter(num);
+    converter.displayWords();
+    return 0;
+}
+
+
+
+Problem Statement
+
+
+
+Veni is organizing a sports event, and she wants to calculate the number of ways you can arrange the participating teams in various orders for the opening ceremony. The event has a total of 'n' teams, and she wants to select 'r' teams for the opening ceremony march-past. Additionally, she needs to find out the total number of ways to form 'r' teams from the given 'n' teams for various other activities during the event.
+
+
+
+To achieve this, she decided to create a dynamic constructor in a class called PermutationsAndCombinations. The class will take 'n' and 'r' as input parameters through the dynamic constructor and then calculate and display the number of permutations and combinations accordingly. Write a program to accomplish this task.
+
+
+
+Permutation (nPr):
+
+Formula: nPr = n! / (n - r)!
+
+
+
+Combination (nCr): 
+
+Formula: nCr = n! / (r! * (n - r)!)
+
+Input format :
+The input consists of two integers, n and r separated by a space.
+
+Output format :
+The first line of the output displays the permutation.
+
+The second line displays the combination.
+
+
+
+Refer to the sample output for formatting specification.
+
+Code constraints :
+0<=n<=10
+
+0<=r<=10
+
+n>=r
+
+
+
+Sample test cases :
+Input 1 :
+5 3
+Output 1 :
+Permutations (nPr): 60
+Combinations (nCr): 10
+Input 2 :
+4 7
+Output 2 :
+Invalid input
+
+
+// You are using GCC
+#include <iostream>
+using namespace std;
+
+class PermutationsAndCombinations {
+private:
+    int n;
+    int r;
+
+public:
+    PermutationsAndCombinations(int n, int r) {
+        this->n = n;
+        this->r = r;
+    }
+    int factorial(int num) {
+        if (num == 0 || num == 1)
+            return 1;
+        else
+            return num * factorial(num - 1);
+    }
+    int calculatePermutations() {
+        return factorial(n) / factorial(n - r);
+    }
+    int calculateCombinations() {
+        return factorial(n) / (factorial(r) * factorial(n - r));
+    }
+    ~PermutationsAndCombinations() {
+    }
+};
+
+int main() {
+    int n, r;
+    cin >> n;
+    cin >> r;
+    if (n < 0 || r < 0 || n < r) {
+        cout << "Invalid input";
+        return 0;
+    }
+    PermutationsAndCombinations* obj = new PermutationsAndCombinations(n, r);
+    int permutations = obj->calculatePermutations();
+    int combinations = obj->calculateCombinations();
+    cout << "Permutations (nPr): " << permutations << endl;
+    cout << "Combinations (nCr): " << combinations;
+    delete obj;
+    return 0;
+}
+
+
+
+
+
+Problem Statement
+
+
+
+Aadhi is designing a lottery game application. The application generates lucky numbers for each participant and checks whether the numbers are lucky or not. A lucky number is defined as a number that does not contain any repeated digits. For example, 123 is a lucky number, but 112 is not.
+
+
+
+To implement the lucky number checking functionality, he has created the class LuckyChecker. This class has a dynamic constructor that takes an array of numbers and their size as input and dynamically allocates memory to store these numbers. The class also provides a method isLucky(int num) that checks whether a given number is lucky or not. Write a program to accomplish this task.
+
+
+
+Note: This kind of question will help in clearing Wipro recruitment.
+
+Input format :
+The first line consists of an integer 'n' that represents the number of participants.
+
+The second line represents n integers that represents the lottery numbers.
+
+Output format :
+The output displays whether the given number is a lucky number or not in separate lines.
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+1<=n<=100
+
+lottery numbers<1000
+
+Sample test cases :
+Input 1 :
+3
+121 123 234
+Output 1 :
+121 is not Lucky 
+123 is Lucky 
+234 is Lucky 
+Input 2 :
+5
+545 632 783 944 385
+Output 2 :
+545 is not Lucky 
+632 is Lucky 
+783 is Lucky 
+944 is not Lucky 
+385 is Lucky 
+
+
+
+
+// You are using GCC
+#include <iostream>
+using namespace std;
+class LuckyChecker {
+private:
+    int* arr;
+    int n;
+public:
+    LuckyChecker() {
+        n = 0;
+        arr = nullptr;
+    }
+    LuckyChecker(int size, int* numbers) {
+        n = size;
+        arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = numbers[i];
+        }
+    }
+    ~LuckyChecker() {
+        delete[] arr;
+    }
+    bool isLucky(int num) {
+        bool* digitSeen = new bool[10];
+        for (int i = 0; i < 10; i++)
+            digitSeen[i] = false;
+        while (num > 0) {
+            int digit = num % 10;
+            if (digitSeen[digit]) {
+                delete[] digitSeen;
+                return false;
+            }
+            digitSeen[digit] = true;
+            num = num / 10;
+        }
+        delete[] digitSeen;
+        return true;
+    }
+};
+
+int main() {
+    int n;
+    cin >> n;
+    int* numbers = new int[n];
+    for (int i = 0; i < n; i++) {
+        cin >> numbers[i];
+    }
+    LuckyChecker luckyChecker(n, numbers);
+    for (int i = 0; i < n; i++) {
+        luckyChecker.isLucky(numbers[i]) ? cout << numbers[i] << " is Lucky \n" : cout << numbers[i] << " is not Lucky \n";
+    }
+    delete[] numbers;
+    return 0;
+}
+
+
+Problem Statement
+
+
+
+Mary is working as a software developer at a research institute, and your team is involved in a project that deals with very large factorials. The goal of the project is to calculate the number of digits in the factorials of large numbers. Her task is to implement the FactorialCalculator class provided in the code to handle these large factorials using a dynamic constructor and test its functionality.
+
+
+
+The FactorialCalculator class is designed to calculate factorials of non-negative integers and store the result in an array using a dynamic constructor. The class should use a dynamic constructor to allocate memory for the factorial array, allowing it to handle even larger factorials efficiently and avoid limitations on the array size. Write a program to accomplish this task.
+
+
+
+Note: This kind of question will help in clearing HCL recruitment.
+
+Input format :
+The input consists of an integer 'n'.
+
+Output format :
+The output displays the number of digits in the factorial of the given number n.
+
+If the input value n is negative, it prints the "Invalid input".
+
+
+
+Refer to the sample output for formatting specifications.
+
+Code constraints :
+0 <= n <= 20
+
+Sample test cases :
+Input 1 :
+3
+Output 1 :
+1
+Input 2 :
+5
+Output 2 :
+3
+Input 3 :
+-1
+Output 3 :
+Invalid input
+
+
+// You are using GCC
+#include <iostream>
+
+using namespace std;
+
+class FactorialCalculator {
+private:
+    int* factorialResult;
+    int numDigits;
+
+    void calculateFactorial(int n) {
+        factorialResult = new int[2000]{0};
+        factorialResult[0] = 1;
+        numDigits = 1;
+
+        for (int i = 2; i <= n; i++) {
+            int carry = 0;
+            for (int j = 0; j < numDigits; j++) {
+                int product = factorialResult[j] * i + carry;
+                factorialResult[j] = product % 10;
+                carry = product / 10;
+            }
+
+            while (carry > 0) {
+                factorialResult[numDigits] = carry % 10;
+                carry /= 10;
+                numDigits++;
+            }
+        }
+    }
+
+public:
+    FactorialCalculator(int n) {
+        if (n < 0) {
+            cout << "Invalid input";
+            factorialResult = nullptr;
+            numDigits = 0;
+        } else if (n == 0) {
+            factorialResult = new int[1]{1};
+            numDigits = 1;
+        } else {
+            calculateFactorial(n);
+        }
+    }
+
+    ~FactorialCalculator() {
+        delete[] factorialResult;
+    }
+
+    int getNumDigits() const {
+        return numDigits;
+    }
+};
+
+int main() {
+    int num;
+    cin >> num;
+    FactorialCalculator* factorial = new FactorialCalculator(num);
+
+    if (factorial->getNumDigits() > 0) {
+        cout << factorial->getNumDigits();
+    }
+
+    delete factorial;
+    return 0;
+}
+
+
+Problem Statement
+
+
+
+You work for a computer hardware manufacturer and are tasked with developing a program to assist in testing the binary-to-decimal conversion functionality of their microprocessors. As part of the testing process, you need to convert binary numbers to decimal numbers.
+
+
+
+Write a program that converts a decimal number to binary representation using early binding.
+
+Input format :
+The input consists of a single integer, n representing the decimal number to be converted.
+
+Output format :
+0 <= n <= 109
+
+Sample test cases :
+Input 1 :
+12
+Output 1 :
+1100
+Input 2 :
+1485
+Output 2 :
+10111001101
+
+
+// You are using GCC
+
+#include <iostream>
+
+using namespace std;
+
+
+
+
+class DecimalToBinaryConverter {
+
+public:
+
+virtual void convert(int decimal) {
+
+if (decimal == 0) {
+
+cout << "0";
+
+return;
+
+}
+
+
+
+
+int binary[32];
+
+int index = 0;
+
+while (decimal > 0) {
+
+binary[index++] = decimal % 2;
+
+decimal = decimal / 2;
+
+}
+
+
+
+
+for (int i = index - 1; i >= 0; i--) {
+
+cout << binary[i];
+
+}
+
+}
+
+};
+
+
+
+
+int main() {
+
+int decimal;
+
+cin >> decimal;
+
+
+
+
+DecimalToBinaryConverter converter;
+
+converter.convert(decimal);
+
+
+
+
+return 0;
+
+} 
+
+
+Problem Statement
+
+
+
+Design a program to manage student information using dynamic constructor and memory allocation. The program should allow users to create and manage student objects with customizable attributes such as name, age, and enrolled courses. 
+
+
+
+Implement a dynamic constructor that takes the student's name, age, and the number of courses as parameters and allocates memory dynamically to store the course names. The program should handle memory deallocation in the destructor.
+
+
+
+Additionally, design methods to set and retrieve the student attributes, check if the student is enrolled in a specific course, and display the student details.
+
+Input format :
+The input consists of the following:
+
+First line: The student's name as a string of alphanumeric characters.
+
+Second line: The student's age as a positive integer.
+
+Third line: The number of courses (n) the student is enrolled in as a positive integer.
+
+Fourth line onwards: For each course, The name of the course as a string of alphanumeric characters.
+
+Output format :
+The output displays the student's name, age, and courses(space-separated).
+
+The following output displays the results of checking if the student is enrolled in a specific course, which can be "Yes" or "No".
+
+Code constraints :
+1 <= n <= 15
+
+Sample test cases :
+Input 1 :
+Nisha
+19
+3
+Physics
+Chemistry
+Botany
+Zoology
+Output 1 :
+Student Details:
+Name: Nisha
+Age: 19
+Courses: Physics Chemistry Botany 
+
+Is the student enrolled in Zoology? No
+Input 2 :
+Nisha
+19
+3
+Physics
+Chemistry
+Botany
+Chemistry
+Output 2 :
+Student Details:
+Name: Nisha
+Age: 19
+Courses: Physics Chemistry Botany 
+
+Is the student enrolled in Chemistry? Yes
+
+
+// You are using GCC
+
+#include <iostream>
+
+#include <string>
+
+
+
+
+class Student {
+
+private:
+
+std::string name;
+
+int age;
+
+std::string* courses;
+
+int numCourses;
+
+
+
+
+public:
+
+// Dynamic constructor
+
+Student(std::string name, int age, int numCourses) {
+
+this->name = name;
+
+this->age = age;
+
+this->numCourses = numCourses;
+
+
+
+
+// Allocate memory for the courses array
+
+courses = new std::string[numCourses];
+
+}
+
+
+
+
+// Method to set the course at a specific index
+
+void setCourse(int index, std::string course) {
+
+if (index >= 0 && index < numCourses) {
+
+courses[index] = course;
+
+}
+
+}
+
+
+
+
+// Method to display student details
+
+void display() {
+
+std::cout << "Name: " << name << std::endl;
+
+std::cout << "Age: " << age << std::endl;
+
+std::cout << "Courses: ";
+
+for (int i = 0; i < numCourses; i++) {
+
+std::cout << courses[i] << " ";
+
+}
+
+std::cout << std::endl << std::endl;
+
+}
+
+
+
+
+// Method to check if the student is enrolled in a specific course
+
+bool isEnrolledInCourse(std::string course) {
+
+for (int i = 0; i < numCourses; i++) {
+
+if (courses[i] == course) {
+
+return true;
+
+}
+
+}
+
+return false;
+
+}
+
+
+
+
+// Destructor
+
+~Student() {
+
+// Deallocate memory for the courses array
+
+delete[] courses;
+
+}
+
+};
+
+
+
+
+int main() {
+
+// Prompt user to input student details
+
+std::string name;
+
+int age;
+
+int numCourses;
+
+
+
+
+// std::cout << "Enter the student's name: ";
+
+std::getline(std::cin, name);
+
+// std::cout << "Enter the student's age: ";
+
+std::cin >> age;
+
+// std::cout << "Enter the number of courses the student is enrolled in: ";
+
+std::cin >> numCourses;
+
+std::cin.ignore(); // Ignore the newline character
+
+
+
+
+// Create student object using dynamic constructor
+
+Student* student = new Student(name, age, numCourses);
+
+
+
+
+// Prompt user to input course details
+
+for (int i = 0; i < numCourses; i++) {
+
+std::string course;
+
+// std::cout << "Enter the name of course " << i + 1 << ": ";
+
+std::getline(std::cin, course);
+
+student->setCourse(i, course);
+
+}
+
+
+
+
+// Display student details
+
+std::cout << "Student Details:" << std::endl;
+
+student->display();
+
+
+
+
+// Perform operations on the student
+
+std::string courseToCheck;
+
+// std::cout << "Enter the name of the course to check enrollment: ";
+
+std::getline(std::cin, courseToCheck);
+
+
+
+
+std::cout << "Is the student enrolled in " << courseToCheck << "? ";
+
+if (student->isEnrolledInCourse(courseToCheck)) {
+
+std::cout << "Yes";
+
+} else {
+
+std::cout << "No";
+
+}
+
+
+
+
+// Deallocate memory
+
+delete student;
+
+return 0;
+
+} 
+
+
+
+Problem Statement
+
+
+
+An ice cream vendor sells two types of ice cream containers: sphere-shaped and cone-shaped. The vendor wants to calculate the volume of ice cream that can be filled in each type of container based on their dimensions.
+
+
+
+You are required to write a program that takes the dimensions of the containers as input and calculates the volume using the provided Icecream class. The class has two methods with the same name, Quantity, which calculate the volume of the containers based on their dimensions.
+
+
+
+Note: Use M_PI for pi and use late binding.
+
+Input format :
+The first line of the input consists of the choice (1 for sphere, 2 for cone).
+
+If the choice is 1, enter the radius of the sphere.
+
+If the choice is 2, enter the radius and height of the cone, separated by a space.
+
+
+
+Note: The input type should be an integer.
+
+Output format :
+The output must display the volume of the container based on the choices rounded off to two decimal places.
+
+If the choice is invalid, it prints nothing.
+
+Sample test cases :
+Input 1 :
+1
+4
+Output 1 :
+268.08
+Input 2 :
+2
+4 5
+Output 2 :
+82.94
+
+
+
+// You are using GCC
+
+#include <iostream>
+
+#include <iomanip>
+
+#include <cmath>
+
+
+
+
+class Icecream {
+
+public:
+
+virtual float Quantity() = 0;
+
+};
+
+
+
+
+class SphereIcecream : public Icecream {
+
+private:
+
+int radius;
+
+public:
+
+SphereIcecream(int r) : radius(r) {}
+
+
+
+
+float Quantity() override {
+
+return 4.0 / 3.0 * M_PI * pow(radius, 3);
+
+}
+
+};
+
+
+
+
+class ConeIcecream : public Icecream {
+
+private:
+
+int radius;
+
+int height;
+
+public:
+
+ConeIcecream(int r, int h) : radius(r), height(h) {}
+
+
+
+
+float Quantity() override {
+
+return 0.33 * M_PI * pow(radius, 2) * height;
+
+}
+
+};
+
+
+
+
+int main() {
+
+Icecream* obj;
+
+int choice, r, h;
+
+std::cin >> choice;
+
+
+
+
+if (choice == 1) {
+
+std::cin >> r;
+
+obj = new SphereIcecream(r);
+
+}
+
+else if (choice == 2) {
+
+std::cin >> r >> h;
+
+obj = new ConeIcecream(r, h);
+
+}
+
+else {
+
+// std::cout << "Invalid choice!";
+
+return 0;
+
+}
+
+
+
+
+std::cout << std::fixed << std::setprecision(2);
+
+std::cout << obj->Quantity();
+
+
+
+
+delete obj;
+
+return 0;
+
+} 
+
+
+Problem Statement
+
+
+
+Design a program to manage Book information using dynamic constructor and memory allocation. The program should allow users to create and manage book objects with customizable attributes such as title, author, and year of publication.
+
+
+
+Implement a dynamic constructor that takes the book's title, author, and year of publication as parameters and allocates memory dynamically to store the book names. The program should handle memory deallocation in the destructor.
+
+
+
+Additionally, design methods to set and retrieve the book attributes, update the given year to a specific year and display the book details.
+
+Input format :
+The input consists of the following:
+
+The first line consists of the title of the book.
+
+The second line consists of the name of the author.
+
+The third line consists of the year of publication.
+
+The fourth line consists of the year of publication to be updated.
+
+Output format :
+The program displays the book details in the following format:
+
+The title of the book.
+
+The name of the author.
+
+The year of publication.
+
+
+
+The last line displays the updated year of publication.
+
+Sample test cases :
+Input 1 :
+Harry Potter and the Chamber of Secrets
+J K Rowling
+1997
+1998
+Output 1 :
+Book Details:
+Title: Harry Potter and the Chamber of Secrets
+Author: J K Rowling
+Year of Publication: 1997
+
+Updated Year of Publication: 1998
+
+
+
+// You are using GCC
+
+#include <iostream>
+
+#include <string>
+
+
+
+
+class Book {
+
+private:
+
+std::string title;
+
+std::string author;
+
+int year;
+
+
+
+
+public:
+
+// Dynamic constructor
+
+Book(const std::string& title, const std::string& author, int year) {
+
+this->title = title;
+
+this->author = author;
+
+this->year = year;
+
+}
+
+
+
+
+// Method to set the year of publication
+
+void setYear(int year) {
+
+this->year = year;
+
+}
+
+
+
+
+// Method to retrieve the year of publication
+
+int getYear() const {
+
+return year;
+
+}
+
+
+
+
+// Method to display book details
+
+void displayDetails() const {
+
+std::cout << "Title: " << title << std::endl;
+
+std::cout << "Author: " << author << std::endl;
+
+std::cout << "Year of Publication: " << year << std::endl;
+
+}
+
+};
+
+
+
+
+int main() {
+
+std::string title, author;
+
+int year;
+
+std::getline(std::cin, title);
+
+std::getline(std::cin, author);
+
+std::cin >> year;
+
+std::cin.ignore(); // Ignore the newline character
+
+
+
+
+Book* book = new Book(title, author, year);
+
+
+
+
+std::cout << "Book Details:" << std::endl;
+
+book->displayDetails();
+
+
+
+
+// Perform operations on the book
+
+int newYear;
+
+std::cin >> newYear;
+
+
+
+
+book->setYear(newYear);
+
+
+
+
+std::cout << std::endl << "Updated Year of Publication: " << book->getYear();
+
+
+
+
+// Deallocate memory
+
+delete book;
+
+
+
+
+return 0;
+
+} 
+
+
+
+
